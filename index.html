@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SHADOW TEST SPEED</title>
+    <!-- Font và Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* --- RESET & NỀN --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0b0710;
+            /* Nền tím huyền ảo chuyển động */
+            background-image: radial-gradient(circle at 20% 30%, #1a0b2e, #0a0512 80%);
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Hiệu ứng ánh sáng ma thuật */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 60%, rgba(120, 40, 200, 0.15), transparent 60%),
+                radial-gradient(circle at 30% 80%, rgba(200, 100, 255, 0.08), transparent 50%);
+            pointer-events: none;
+        }
+
+        /* --- CONTAINER CHÍNH (hiệu ứng kính mờ) --- */
+        .container {
+            max-width: 780px;
+            width: 100%;
+            background: rgba(20, 10, 35, 0.65);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(180, 80, 255, 0.25);
+            border-radius: 48px;
+            padding: 40px 35px 45px;
+            box-shadow: 0 25px 60px rgba(90, 20, 180, 0.5), inset 0 0 60px rgba(150, 50, 255, 0.1);
+            position: relative;
+            z-index: 2;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        /* --- HEADER: Logo + bản quyền --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .shadow-icon {
+            font-size: 34px;
+            color: #b77aff;
+            filter: drop-shadow(0 0 15px #a34cff);
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #d4a0ff, #7a2bff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .copyright-badge {
+            font-size: 13px;
+            color: #b77aff;
+            background: rgba(100, 40, 200, 0.25);
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(180, 80, 255, 0.3);
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 20px rgba(140, 60, 255, 0.15);
+        }
+
+        .copyright-badge i {
+            margin-right: 6px;
+        }
+
+        /* --- VÒNG TRÒN TEST (chính) --- */
+        .test-circle-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0 10px;
+        }
+
+        .test-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #3a1a5a, #130a20);
+            border: 2px solid rgba(180, 80, 255, 0.5);
+            box-shadow: 0 0 70px rgba(120, 40, 255, 0.3), inset 0 0 60px rgba(100, 30, 200, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .test-circle:hover {
+            transform: scale(1.02);
+            border-color: #b77aff;
+            box-shadow: 0 0 90px rgba(150, 60, 255, 0.5);
+        }
+
+        .test-circle:active {
+            transform: scale(0.96);
+        }
+
+        .circle-status {
+            font-size: 18px;
+            font-weight: 600;
+            color: #decbff;
+            letter-spacing: 1px;
+            text-shadow: 0 0 20px #a04cff;
+        }
+
+        .circle-icon {
+            font-size: 38px;
+            color: #b77aff;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 0 15px #a34cff);
+        }
+
+        .ping-display {
+            font-size: 28px;
+            font-weight: 700;
+            color: #e6d0ff;
+            text-shadow: 0 0 25px #a44cff;
+            margin-top: 4px;
+        }
+
+        .ping-display small {
+            font-size: 15px;
+            font-weight: 400;
+            color: #b28ad9;
+        }
+
+        /* --- KẾT QUẢ CHI TIẾT --- */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 35px 0 30px;
+        }
+
+        .result-item {
+            background: rgba(30, 15, 50, 0.5);
+            backdrop-filter: blur(4px);
+            padding: 18px 8px;
+            border-radius: 28px;
+            border: 1px solid rgba(150, 70, 255, 0.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: 0.2s;
+        }
+
+        .result-item:hover {
+            border-color: rgba(180, 100, 255, 0.4);
+            background: rgba(40, 20, 65, 0.6);
+        }
+
+        .result-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #a57fc9;
+            margin-bottom: 6px;
+        }
+
+        .result-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #e8d4ff;
+            text-shadow: 0 0 20px rgba(150, 70, 255, 0.3);
+        }
+
+        .result-value small {
+            font-size: 14px;
+            font-weight: 400;
+            color: #b28ad9;
+            margin-left: 2px;
+        }
+
+        /* --- NÚT & TRẠNG THÁI --- */
+        .action-area {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .btn-shadow {
+            background: linear-gradient(145deg, #501c8a, #2d0f54);
+            border: 1px solid rgba(180, 80, 255, 0.4);
+            color: #e8d4ff;
+            font-size: 18px;
+            font-weight: 600;
+            padding: 16px 50px;
+            border-radius: 60px;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 10px 35px rgba(90, 30, 180, 0.4);
+            transition: 0.25s;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btn-shadow:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(145deg, #6424a8, #3a1370);
+            border-color: #b77aff;
+            box-shadow: 0 15px 45px rgba(130, 50, 255, 0.5);
+        }
+
+        .btn-shadow:active {
+            transform: scale(0.96);
+        }
+
+        .btn-shadow i {
+            font-size: 22px;
+            color: #c99eff;
+        }
+
+        .status-text {
+            margin-top: 20px;
+            font-size: 15px;
+            color: #b28ad9;
+            letter-spacing: 0.3px;
+            min-height: 28px;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 550px) {
+            .container {
+                padding: 30px 18px;
+                border-radius: 32px;
+            }
+            .logo-text {
+                font-size: 20px;
+            }
+            .copyright-badge {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+            .results-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .test-circle {
+                width: 160px;
+                height: 160px;
+            }
+            .result-value {
+                font-size: 22px;
+            }
+            .btn-shadow {
+                padding: 14px 30px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        }
+
+        /* Hiệu ứng chớp nhẹ cho vòng tròn khi test */
+        .testing .test-circle {
+            animation: pulse-glow 0.9s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 40px rgba(120, 40, 255, 0.3);
+                border-color: rgba(180, 80, 255, 0.4);
+            }
+            100% {
+                box-shadow: 0 0 100px rgba(170, 70, 255, 0.7);
+                border-color: #c38aff;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER: Logo + © Shadow Team 2026 -->
+        <div class="header">
+            <div class="logo-area">
+                <i class="fas fa-ghost shadow-icon"></i>
+                <span class="logo-text">SHADOW TEST</span>
+            </div>
+            <div class="copyright-badge">
+                <i class="far fa-copyright"></i> Shadow Team 2026
+            </div>
+        </div>
+
+        <!-- VÒNG TRÒN TEST (chính) -->
+        <div class="test-circle-wrapper">
+            <div class="test-circle" id="testCircle">
+                <i class="fas fa-bolt circle-icon"></i>
+                <span class="circle-status" id="statusLabel">SẴN SÀNG</span>
+                <div class="ping-display" id="pingDisplay">-- <small>ms</small></div>
+            </div>
+        </div>
+
+        <!-- BẢNG KẾT QUẢ -->
+        <div class="results-grid">
+            <div class="result-item">
+                <div class="result-label"><i class="fas fa-arrow-down" style="margin-right:6px; color:#b77aff;"></i> Tải xuống</div>
+                <div class="result-value" id="downloadValue">-- <small>Mbps</small></div>
+            </div>
+            <div class="result-item">
+                <div class="result-label"><i class="fas fa-arrow-up" style="margin-right:6px; color:#b77aff;"></i> Tải lên</div>
+                <div class="result-value" id="uploadValue">-- <small>Mbps</small></div>
+            </div>
+            <div class="result-item">
+                <div class="result-label"><i class="fas fa-signal" style="margin-right:6px; color:#b77aff;"></i> Ping (độ trễ)</div>
+                <div class="result-value" id="pingValue">-- <small>ms</small></div>
+            </div>
+        </div>
+
+        <!-- NÚT TEST & TRẠNG THÁI -->
+        <div class="action-area">
+            <button class="btn-shadow" id="testBtn">
+                <i class="fas fa-play"></i> BẮT ĐẦU TEST
+            </button>
+        </div>
+        <div class="status-text" id="statusMessage">Nhấn nút hoặc vòng tròn để kiểm tra tốc độ</div>
+    </div>
+
+    <script>
+        // --- LẤY PHẦN TỬ DOM ---
+        const testCircle = document.getElementById('testCircle');
+        const testBtn = document.getElementById('testBtn');
+        const statusLabel = document.getElementById('statusLabel');
+        const pingDisplay = document.getElementById('pingDisplay');
+        const downloadValue = document.getElementById('downloadValue');
+        const uploadValue = document.getElementById('uploadValue');
+        const pingValue = document.getElementById('pingValue');
+        const statusMessage = document.getElementById('statusMessage');
+        const container = document.querySelector('.container');
+
+        // --- HÀM MÔ PHỎNG TEST (vì không thể test thật trên GitHub Pages do giới hạn CORS) ---
+        function runSpeedTest() {
+            // Disable tương tác trong lúc test
+            testCircle.style.pointerEvents = 'none';
+            testBtn.disabled = true;
+            container.classList.add('testing');
+
+            // Cập nhật trạng thái
+            statusLabel.textContent = 'ĐANG TEST...';
+            statusMessage.textContent = '🔄 Đang đo tốc độ, vui lòng đợi...';
+            pingDisplay.innerHTML = '... <small>ms</small>';
+
+            // Reset kết quả cũ
+            downloadValue.innerHTML = '... <small>Mbps</small>';
+            uploadValue.innerHTML = '... <small>Mbps</small>';
+            pingValue.innerHTML = '... <small>ms</small>';
+
+            // Mô phỏng các bước test (Ping -> Download -> Upload)
+            const steps = [
+                { delay: 600, label: 'Đang đo Ping...', ping: (40 + Math.random() * 80).toFixed(0) },
+                { delay: 1500, label: 'Đang đo Tải xuống...', download: (30 + Math.random() * 250).toFixed(1) },
+                { delay: 2400, label: 'Đang đo Tải lên...', upload: (10 + Math.random() * 80).toFixed(1) }
+            ];
+
+            let pingResult = 0;
+            let downloadResult = 0;
+            let uploadResult = 0;
+
+            // Bước 1: Ping
+            setTimeout(() => {
+                pingResult = parseFloat(steps[0].ping);
+                pingDisplay.innerHTML = `${pingResult} <small>ms</small>`;
+                pingValue.innerHTML = `${pingResult} <small>ms</small>`;
+                statusLabel.textContent = 'PING ✓';
+                statusMessage.textContent = '📡 ' + steps[0].label;
+            }, steps[0].delay);
+
+            // Bước 2: Download
+            setTimeout(() => {
+                downloadResult = parseFloat(steps[1].download);
+                downloadValue.innerHTML = `${downloadResult} <small>Mbps</small>`;
+                statusLabel.textContent = 'TẢI XUỐNG ✓';
+                statusMessage.textContent = '⬇️ ' + steps[1].label;
+            }, steps[1].delay);
+
+            // Bước 3: Upload + hoàn tất
+            setTimeout(() => {
+                uploadResult = parseFloat(steps[2].upload);
+                uploadValue.innerHTML = `${uploadResult} <small>Mbps</small>`;
+                statusLabel.textContent = 'HOÀN TẤT';
+                statusMessage.textContent = '✅ Kiểm tra xong! Kết quả hiển thị bên trên.';
+                pingDisplay.innerHTML = `${pingResult} <small>ms</small>`;
+                // Cập nhật lại ping cho đồng bộ
+                pingValue.innerHTML = `${pingResult} <small>ms</small>`;
+
+                // Kích hoạt lại tương tác
+                testCircle.style.pointerEvents = 'auto';
+                testBtn.disabled = false;
+                container.classList.remove('testing');
+
+                // Hiệu ứng rung nhẹ khi hoàn tất
+                testCircle.style.transition = '0.1s';
+                testCircle.style.transform = 'scale(0.98)';
+                setTimeout(() => { testCircle.style.transform = 'scale(1)'; }, 150);
+
+            }, steps[2].delay);
+        }
+
+        // --- GÁN SỰ KIỆN CHO NÚT VÀ VÒNG TRÒN ---
+        testBtn.addEventListener('click', runSpeedTest);
+        testCircle.addEventListener('click', runSpeedTest);
+
+        // --- THÔNG BÁO KHỞI TẠO ---
+        console.log(' SHADOW TEST SPEED © Shadow Team 2026 ');
+    </script>
+
+</body>
+</html>
