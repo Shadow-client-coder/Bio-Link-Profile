@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SHADOW TEST SPEED</title>
+    <title>SHADOW TEAM - Bio Link</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         * {
@@ -11,35 +11,18 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, sans-serif;
-            transition: background 0.3s, color 0.3s, border-color 0.3s;
         }
 
         :root {
-            --bg-primary: #f5f0ff;
-            --bg-secondary: #ffffff;
-            --bg-card: #ffffff;
-            --text-primary: #1a0b2e;
-            --text-secondary: #4a2a6a;
-            --border-color: #d4c0e8;
-            --shadow-color: rgba(120, 40, 200, 0.15);
-            --accent: #7a2bff;
-            --accent-light: #b77aff;
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(180, 80, 255, 0.2);
-            --success: #00c853;
-            --danger: #ff1744;
-        }
-
-        body.dark {
             --bg-primary: #0b0710;
-            --bg-secondary: #1a0f2a;
-            --bg-card: rgba(20, 10, 35, 0.8);
+            --bg-card: rgba(20, 10, 35, 0.75);
             --text-primary: #e8d4ff;
             --text-secondary: #b28ad9;
-            --border-color: #3a1a6a;
+            --border-color: rgba(180, 80, 255, 0.25);
             --shadow-color: rgba(90, 20, 180, 0.5);
-            --glass-bg: rgba(20, 10, 35, 0.65);
-            --glass-border: rgba(180, 80, 255, 0.25);
+            --accent: #7a2bff;
+            --accent-light: #b77aff;
+            --btn-hover: #9a4bff;
         }
 
         body {
@@ -49,1266 +32,394 @@
             align-items: center;
             background: var(--bg-primary);
             padding: 20px;
+            background-image: radial-gradient(circle at 20% 30%, #1a0b2e, #0a0512 80%);
             position: relative;
         }
 
-        body.dark::before {
+        body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 70% 60%, rgba(120, 40, 200, 0.15), transparent 60%),
-                radial-gradient(circle at 30% 80%, rgba(200, 100, 255, 0.08), transparent 50%);
+            background: radial-gradient(circle at 70% 60%, rgba(120, 40, 200, 0.12), transparent 60%),
+                radial-gradient(circle at 30% 80%, rgba(200, 100, 255, 0.06), transparent 50%);
             pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 600px;
             width: 100%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid var(--glass-border);
-            border-radius: 48px;
-            padding: 35px 30px 30px;
-            box-shadow: 0 25px 60px var(--shadow-color);
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 40px;
+            padding: 0 0 30px 0;
+            box-shadow: 0 25px 60px var(--shadow-color), inset 0 0 60px rgba(150, 50, 255, 0.05);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        /* BANNER */
+        .banner {
+            width: 100%;
+            height: 200px;
+            background: url('https://i.ibb.co/9MJV3HV/IMG-0741.jpg') center/cover no-repeat;
+            position: relative;
+            border-radius: 40px 40px 0 0;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(120, 40, 200, 0.15) 0%, rgba(10, 5, 18, 0.7) 100%);
+            border-radius: 40px 40px 0 0;
+        }
+
+        /* AVATAR */
+        .avatar-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: -60px;
             position: relative;
             z-index: 2;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            font-size: 28px;
-            color: var(--accent);
-        }
-
-        .logo-text {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-light), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .header-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            width: 40px;
-            height: 40px;
+        .avatar {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .header-btn:hover {
-            border-color: var(--accent);
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 55px;
-            right: 0;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 12px 0;
-            min-width: 220px;
-            max-height: 400px;
-            overflow-y: auto;
-            box-shadow: 0 15px 40px var(--shadow-color);
-            z-index: 10;
-        }
-
-        .dropdown-menu.active {
-            display: block;
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 10px 20px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .dropdown-menu a:hover {
+            border: 4px solid var(--accent);
             background: var(--bg-primary);
+            padding: 4px;
+            box-shadow: 0 0 40px rgba(120, 40, 200, 0.4);
         }
 
-        .dropdown-menu .divider {
-            height: 1px;
-            background: var(--border-color);
-            margin: 6px 0;
-        }
-
-        .lang-submenu {
-            padding-left: 20px;
-            display: none;
-        }
-
-        .lang-submenu.active {
-            display: block;
-        }
-
-        .lang-submenu a {
-            font-size: 13px;
-            padding: 6px 20px;
-        }
-
-        .main-display {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 10px 0 20px;
-            width: 100%;
-        }
-
-        .gauge-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-
-        .speed-gauge {
-            position: relative;
-            width: 260px;
-            height: 260px;
-            flex-shrink: 0;
-        }
-
-        .speed-gauge svg {
-            transform: rotate(-90deg);
+        .avatar img {
             width: 100%;
             height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #1a0b2e;
         }
 
-        .speed-gauge .bg-circle {
-            fill: none;
-            stroke: var(--border-color);
-            stroke-width: 12;
-        }
-
-        .speed-gauge .progress-circle {
-            fill: none;
-            stroke: var(--accent);
-            stroke-width: 12;
-            stroke-linecap: round;
-            stroke-dasharray: 628.32;
-            stroke-dashoffset: 628.32;
-            transition: stroke-dashoffset 1.5s ease;
-        }
-
-        .gauge-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        /* INFO */
+        .info {
             text-align: center;
-            width: 100%;
-            pointer-events: none;
+            padding: 15px 20px 10px;
         }
 
-        .gauge-value {
-            font-size: 42px;
-            font-weight: 700;
-            color: var(--text-primary);
-            line-height: 1;
-        }
-
-        .gauge-value small {
-            font-size: 18px;
-            font-weight: 400;
-            color: var(--text-secondary);
-        }
-
-        .gauge-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-top: 4px;
+        .name {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #d4a0ff, #7a2bff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(120, 40, 200, 0.3);
             letter-spacing: 2px;
         }
 
-        .ping-row {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 15px;
-            width: 100%;
-            flex-wrap: wrap;
-        }
-
-        .ping-item {
-            text-align: center;
-        }
-
-        .ping-item .value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .ping-item .value small {
-            font-size: 14px;
-            font-weight: 400;
+        .owner {
+            font-size: 16px;
             color: var(--text-secondary);
-        }
-
-        .ping-item .label {
-            font-size: 13px;
-            color: var(--text-secondary);
+            margin-top: 4px;
             letter-spacing: 1px;
         }
 
-        .info-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 20px 25px;
-            margin: 15px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
+        .owner span {
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
-        .info-left {
+        .country {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .email {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 18px;
+            background: rgba(120, 40, 200, 0.15);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .email:hover {
+            background: rgba(120, 40, 200, 0.25);
+            border-color: var(--accent-light);
+            color: var(--text-primary);
+        }
+
+        .email i {
+            margin-right: 8px;
+            color: var(--accent-light);
+        }
+
+        /* BUTTONS */
+        .links {
+            padding: 15px 25px 10px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
-        }
-
-        .info-left .isp {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .info-left .detail {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .info-right {
-            display: flex;
             gap: 12px;
-            flex-wrap: wrap;
         }
 
-        .info-right .badge {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            cursor: pointer;
-        }
-
-        .info-right .badge:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .action-row {
+        .btn-link {
             display: flex;
-            gap: 12px;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
-            margin: 15px 0 10px;
-        }
-
-        .action-btn {
-            background: var(--bg-card);
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(30, 15, 55, 0.6);
             border: 1px solid var(--border-color);
+            border-radius: 60px;
             color: var(--text-primary);
-            padding: 12px 24px;
-            border-radius: 40px;
-            font-size: 14px;
+            text-decoration: none;
+            font-size: 16px;
             font-weight: 500;
-            cursor: pointer;
-            flex: 1;
-            min-width: 120px;
-            max-width: 200px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
         }
 
-        .action-btn:hover {
-            border-color: var(--accent);
-            background: var(--bg-primary);
+        .btn-link::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(120, 40, 200, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .action-btn.primary {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
+        .btn-link:hover {
+            transform: translateY(-2px) scale(1.02);
+            border-color: var(--accent-light);
+            box-shadow: 0 10px 30px rgba(90, 20, 180, 0.3);
+            background: rgba(40, 20, 70, 0.7);
         }
 
-        .action-btn.primary:hover {
-            opacity: 0.85;
+        .btn-link:hover::before {
+            opacity: 1;
         }
 
-        .action-btn.active-auto {
-            background: var(--success);
-            border-color: var(--success);
-            color: #fff;
-        }
-
-        /* Stats & History */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-            padding: 15px;
-            background: var(--bg-card);
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-        }
-
-        .stats-grid .stat-item {
+        .btn-link i {
+            font-size: 22px;
+            width: 30px;
             text-align: center;
+            color: var(--accent-light);
+            transition: 0.3s;
+            z-index: 1;
         }
 
-        .stats-grid .stat-item .stat-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-primary);
+        .btn-link:hover i {
+            transform: scale(1.1);
+            color: #c99eff;
         }
 
-        .stats-grid .stat-item .stat-label {
-            font-size: 11px;
+        .btn-link .btn-text {
+            flex: 1;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .btn-link .btn-arrow {
             color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 14px;
+            transition: 0.3s;
+            z-index: 1;
         }
 
-        .history-list {
-            max-height: 150px;
-            overflow-y: auto;
-            margin: 10px 0;
-            padding: 10px;
-            background: var(--bg-card);
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
+        .btn-link:hover .btn-arrow {
+            transform: translateX(4px);
+            color: var(--accent-light);
         }
 
-        .history-list .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 10px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            border-bottom: 1px solid var(--border-color);
+        /* Màu sắc riêng cho từng nút khi hover */
+        .btn-youtube:hover {
+            border-color: #ff0033;
+            box-shadow: 0 10px 30px rgba(255, 0, 51, 0.2);
+        }
+        .btn-youtube:hover i {
+            color: #ff0033;
         }
 
-        .history-list .history-item:last-child {
-            border-bottom: none;
+        .btn-tiktok:hover {
+            border-color: #00f2ea;
+            box-shadow: 0 10px 30px rgba(0, 242, 234, 0.15);
+        }
+        .btn-tiktok:hover i {
+            color: #00f2ea;
         }
 
+        .btn-discord:hover {
+            border-color: #5865f2;
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.2);
+        }
+        .btn-discord:hover i {
+            color: #5865f2;
+        }
+
+        .btn-github:hover {
+            border-color: #f0f6fc;
+            box-shadow: 0 10px 30px rgba(240, 246, 252, 0.1);
+        }
+        .btn-github:hover i {
+            color: #f0f6fc;
+        }
+
+        .btn-portfolio:hover {
+            border-color: #ff6bff;
+            box-shadow: 0 10px 30px rgba(255, 107, 255, 0.2);
+        }
+        .btn-portfolio:hover i {
+            color: #ff6bff;
+        }
+
+        /* FOOTER */
         .footer {
             text-align: center;
-            margin-top: 25px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
+            padding: 20px 20px 0;
             font-size: 13px;
             color: var(--text-secondary);
             letter-spacing: 0.5px;
+            border-top: 1px solid var(--border-color);
+            margin: 10px 25px 0;
         }
 
-        .footer .shadow {
-            color: var(--accent);
+        .footer .highlight {
+            color: var(--accent-light);
             font-weight: 600;
         }
 
-        /* Toast notification */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            padding: 12px 24px;
-            border-radius: 40px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px var(--shadow-color);
-            z-index: 100;
-            display: none;
-            font-size: 14px;
-            animation: slideUp 0.3s ease;
-        }
-
-        .toast.show {
-            display: block;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        @media (max-width: 600px) {
+        /* RESPONSIVE */
+        @media (max-width: 500px) {
             .container {
-                padding: 20px 15px;
-                border-radius: 32px;
+                border-radius: 28px;
             }
-            .logo-text {
+            .banner {
+                height: 150px;
+                border-radius: 28px 28px 0 0;
+            }
+            .banner-overlay {
+                border-radius: 28px 28px 0 0;
+            }
+            .avatar {
+                width: 90px;
+                height: 90px;
+                margin-top: -50px;
+            }
+            .name {
+                font-size: 26px;
+            }
+            .links {
+                padding: 12px 16px 8px;
+                gap: 10px;
+            }
+            .btn-link {
+                padding: 14px 16px;
+                font-size: 14px;
+            }
+            .btn-link i {
                 font-size: 18px;
-            }
-            .logo-icon {
-                font-size: 22px;
-            }
-            .header-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 14px;
-            }
-            .speed-gauge {
-                width: 200px;
-                height: 200px;
-            }
-            .gauge-value {
-                font-size: 30px;
-            }
-            .gauge-value small {
-                font-size: 14px;
-            }
-            .gauge-label {
-                font-size: 12px;
-            }
-            .ping-row {
-                gap: 25px;
-            }
-            .ping-item .value {
-                font-size: 22px;
-            }
-            .ping-item .value small {
-                font-size: 12px;
-            }
-            .info-card {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-                padding: 15px;
-            }
-            .info-right {
-                justify-content: center;
-            }
-            .action-btn {
-                min-width: 100px;
-                font-size: 12px;
-                padding: 10px 16px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                padding: 12px;
+                width: 24px;
             }
             .footer {
                 font-size: 11px;
+                margin: 8px 16px 0;
+                padding: 16px 16px 0;
             }
         }
 
-        @media (max-width: 400px) {
-            .speed-gauge {
-                width: 160px;
-                height: 160px;
+        @media (max-width: 380px) {
+            .banner {
+                height: 120px;
             }
-            .gauge-value {
-                font-size: 24px;
+            .avatar {
+                width: 75px;
+                height: 75px;
+                margin-top: -40px;
             }
-            .gauge-value small {
-                font-size: 12px;
+            .name {
+                font-size: 22px;
             }
-            .ping-row {
-                gap: 15px;
-            }
-            .ping-item .value {
-                font-size: 18px;
-            }
-        }
-
-        .testing .progress-circle {
-            animation: pulse-stroke 0.8s infinite alternate;
-        }
-
-        @keyframes pulse-stroke {
-            0% {
-                stroke: var(--accent);
-                filter: brightness(1);
-            }
-            100% {
-                stroke: var(--accent-light);
-                filter: brightness(1.5);
+            .btn-link {
+                font-size: 13px;
+                padding: 12px 14px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="app">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="logo-area">
-                <i class="fas fa-bolt logo-icon"></i>
-                <span class="logo-text">SHADOW TEST SPEED</span>
-            </div>
-            <div class="header-right">
-                <button class="header-btn" id="themeToggle" title="Chế độ sáng/tối">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="header-btn" id="shareBtn" title="Chia sẻ kết quả">
-                    <i class="fas fa-share-alt"></i>
-                </button>
-                <button class="header-btn" id="copyBtn" title="Sao chép kết quả">
-                    <i class="fas fa-copy"></i>
-                </button>
-                <div style="position:relative;">
-                    <button class="header-btn" id="menuBtn">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="dropdown-menu" id="dropdownMenu">
-                        <a id="langToggle">🌐 Ngôn ngữ / Language</a>
-                        <div class="lang-submenu" id="langSubmenu">
-                            <a data-lang="vi">🇻🇳 Tiếng Việt</a>
-                            <a data-lang="en">🇬🇧 English</a>
-                            <a data-lang="zh">🇨🇳 中文</a>
-                            <a data-lang="ja">🇯🇵 日本語</a>
-                            <a data-lang="ko">🇰🇷 한국어</a>
-                            <a data-lang="fr">🇫🇷 Français</a>
-                            <a data-lang="de">🇩🇪 Deutsch</a>
-                            <a data-lang="es">🇪🇸 Español</a>
-                            <a data-lang="ru">🇷🇺 Русский</a>
-                            <a data-lang="ar">🇸🇦 العربية</a>
-                        </div>
-                        <div class="divider"></div>
-                        <a id="clearHistoryBtn">🗑️ Xóa lịch sử</a>
-                        <a id="aboutBtn">ℹ️ About</a>
-                    </div>
-                </div>
+    <div class="container">
+        <!-- BANNER -->
+        <div class="banner">
+            <div class="banner-overlay"></div>
+        </div>
+
+        <!-- AVATAR -->
+        <div class="avatar-wrapper">
+            <div class="avatar">
+                <img src="https://yt3.googleusercontent.com/ytc/AIdro_lRzUgpBGCllG3vKSBwwWok3yHl5iKjlIsLQ-0B9AH-iC0=s160-c-k-c0x00ffffff-no-rj" alt="Shadow Team Avatar" />
             </div>
         </div>
 
-        <!-- MAIN DISPLAY -->
-        <div class="main-display">
-            <div class="gauge-wrapper">
-                <div class="speed-gauge" id="gaugeContainer">
-                    <svg width="260" height="260" viewBox="0 0 260 260">
-                        <circle class="bg-circle" cx="130" cy="130" r="100" />
-                        <circle class="progress-circle" id="progressCircle" cx="130" cy="130" r="100" />
-                    </svg>
-                    <div class="gauge-center">
-                        <div class="gauge-value" id="gaugeValue">0.00 <small>Mbps</small></div>
-                        <div class="gauge-label" id="gaugeLabel">TẢI XUỐNG</div>
-                    </div>
-                </div>
-            </div>
-            <div class="ping-row">
-                <div class="ping-item">
-                    <div class="value" id="pingDisplay">-- <small>ms</small></div>
-                    <div class="label" data-key="ping">Ping</div>
-                </div>
-                <div class="ping-item">
-                    <div class="value" id="uploadDisplay">-- <small>Mbps</small></div>
-                    <div class="label" data-key="upload">Tải lên</div>
-                </div>
-            </div>
+        <!-- INFO -->
+        <div class="info">
+            <div class="name">SHADOW TEAM</div>
+            <div class="owner">Owner: <span>MINH TRÍ</span></div>
+            <div class="country">🇻🇳 Vietnam · 2026</div>
+            <a href="mailto:nguyentoan01971@gmail.com" class="email">
+                <i class="fas fa-envelope"></i> nguyentoan01971@gmail.com
+            </a>
         </div>
 
-        <!-- STATS -->
-        <div class="stats-grid" id="statsGrid">
-            <div class="stat-item">
-                <div class="stat-value" id="avgDownload">--</div>
-                <div class="stat-label" data-key="avgDownload">TB Tải xuống</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="avgUpload">--</div>
-                <div class="stat-label" data-key="avgUpload">TB Tải lên</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="avgPing">--</div>
-                <div class="stat-label" data-key="avgPing">TB Ping</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="totalTests">0</div>
-                <div class="stat-label" data-key="totalTests">Số lần test</div>
-            </div>
-        </div>
+        <!-- BUTTONS -->
+        <div class="links">
+            <a href="https://www.youtube.com/@Shadow_System_yt" target="_blank" class="btn-link btn-youtube">
+                <i class="fab fa-youtube"></i>
+                <span class="btn-text">YouTube</span>
+                <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
 
-        <!-- HISTORY -->
-        <div class="history-list" id="historyList">
-            <div style="text-align:center;color:var(--text-secondary);padding:10px;font-size:13px;" data-key="noHistory">Chưa có lịch sử test</div>
-        </div>
+            <a href="https://vt.tiktok.com/ZSX9yTdLE/" target="_blank" class="btn-link btn-tiktok">
+                <i class="fab fa-tiktok"></i>
+                <span class="btn-text">TikTok</span>
+                <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
 
-        <!-- INFO CARD -->
-        <div class="info-card">
-            <div class="info-left">
-                <div class="isp" id="ispName">FPT Telecom</div>
-                <div class="detail" id="ipDetail">1.52.34.168 · Tam Ky</div>
-            </div>
-            <div class="info-right">
-                <span class="badge" onclick="alert('🔧 Đang kiểm tra Wi-Fi...')"><i class="fas fa-wifi"></i> <span data-key="troubleshoot">Troubleshoot</span></span>
-                <span class="badge" onclick="alert('📡 Đang kiểm tra mất kết nối...')"><i class="fas fa-exclamation-triangle"></i> <span data-key="outages">Check Outages</span></span>
-                <span class="badge" onclick="alert('📞 Đang kết nối ISP...')"><i class="fas fa-headset"></i> <span data-key="talkISP">Talk to ISP</span></span>
-            </div>
-        </div>
+            <a href="https://discord.gg/bFv8TPCBKF" target="_blank" class="btn-link btn-discord">
+                <i class="fab fa-discord"></i>
+                <span class="btn-text">Discord</span>
+                <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
 
-        <!-- ACTION BUTTONS -->
-        <div class="action-row">
-            <button class="action-btn primary" id="testBtn"><i class="fas fa-play"></i> <span data-key="go">GO</span></button>
-            <button class="action-btn" id="resetBtn"><i class="fas fa-undo"></i> <span data-key="reset">Reset</span></button>
-            <button class="action-btn" id="autoBtn"><i class="fas fa-clock"></i> <span data-key="auto">Auto</span></button>
+            <a href="https://github.com/Shadow-client-coder" target="_blank" class="btn-link btn-github">
+                <i class="fab fa-github"></i>
+                <span class="btn-text">GitHub</span>
+                <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
+
+            <a href="https://shadow-client-coder.github.io/SHADOWTESTSPEED/" target="_blank" class="btn-link btn-portfolio">
+                <i class="fas fa-bolt"></i>
+                <span class="btn-text">Portfolio</span>
+                <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+            </a>
         </div>
 
         <!-- FOOTER -->
         <div class="footer">
-            <span class="shadow">© Shadow Team 2026</span> · Version 4.0 · Created by Minh Tri
+            <span class="highlight">© Shadow Team 2026</span> · Version 4.0 · Created by Minh Trí
         </div>
     </div>
-
-    <!-- TOAST -->
-    <div class="toast" id="toast"></div>
-
-    <script>
-        // ============================================
-        // LANGUAGE DATA
-        // ============================================
-        const translations = {
-            vi: {
-                ping: 'Ping',
-                upload: 'Tải lên',
-                download: 'TẢI XUỐNG',
-                testing: 'ĐANG TEST...',
-                complete: 'HOÀN TẤT',
-                avgDownload: 'TB Tải xuống',
-                avgUpload: 'TB Tải lên',
-                avgPing: 'TB Ping',
-                totalTests: 'Số lần test',
-                noHistory: 'Chưa có lịch sử test',
-                troubleshoot: 'Troubleshoot',
-                outages: 'Check Outages',
-                talkISP: 'Talk to ISP',
-                go: 'GO',
-                reset: 'Reset',
-                auto: 'Auto',
-                copied: '✅ Đã sao chép kết quả!',
-                shared: '📤 Đã mở chia sẻ!',
-                clearConfirm: '🗑️ Xóa tất cả lịch sử?',
-                historyCleared: 'Đã xóa lịch sử!'
-            },
-            en: {
-                ping: 'Ping',
-                upload: 'Upload',
-                download: 'DOWNLOAD',
-                testing: 'TESTING...',
-                complete: 'COMPLETE',
-                avgDownload: 'Avg Download',
-                avgUpload: 'Avg Upload',
-                avgPing: 'Avg Ping',
-                totalTests: 'Total Tests',
-                noHistory: 'No test history',
-                troubleshoot: 'Troubleshoot',
-                outages: 'Check Outages',
-                talkISP: 'Talk to ISP',
-                go: 'GO',
-                reset: 'Reset',
-                auto: 'Auto',
-                copied: '✅ Results copied!',
-                shared: '📤 Share opened!',
-                clearConfirm: '🗑️ Clear all history?',
-                historyCleared: 'History cleared!'
-            },
-            zh: {
-                ping: '延迟',
-                upload: '上传',
-                download: '下载',
-                testing: '测试中...',
-                complete: '完成',
-                avgDownload: '平均下载',
-                avgUpload: '平均上传',
-                avgPing: '平均延迟',
-                totalTests: '测试次数',
-                noHistory: '暂无测试记录',
-                troubleshoot: '故障排除',
-                outages: '检查中断',
-                talkISP: '联系ISP',
-                go: '开始',
-                reset: '重置',
-                auto: '自动',
-                copied: '✅ 已复制结果!',
-                shared: '📤 已分享!',
-                clearConfirm: '🗑️ 清除所有记录?',
-                historyCleared: '已清除记录!'
-            },
-            ja: {
-                ping: 'Ping',
-                upload: 'アップロード',
-                download: 'ダウンロード',
-                testing: 'テスト中...',
-                complete: '完了',
-                avgDownload: '平均ダウンロード',
-                avgUpload: '平均アップロード',
-                avgPing: '平均Ping',
-                totalTests: 'テスト回数',
-                noHistory: 'テスト履歴なし',
-                troubleshoot: 'トラブルシュート',
-                outages: '障害確認',
-                talkISP: 'ISPに連絡',
-                go: '開始',
-                reset: 'リセット',
-                auto: '自動',
-                copied: '✅ 結果をコピーしました!',
-                shared: '📤 共有しました!',
-                clearConfirm: '🗑️ 履歴を全て削除?',
-                historyCleared: '履歴を削除しました!'
-            },
-            ko: {
-                ping: '핑',
-                upload: '업로드',
-                download: '다운로드',
-                testing: '테스트 중...',
-                complete: '완료',
-                avgDownload: '평균 다운로드',
-                avgUpload: '평균 업로드',
-                avgPing: '평균 핑',
-                totalTests: '테스트 횟수',
-                noHistory: '테스트 기록 없음',
-                troubleshoot: '문제 해결',
-                outages: '장애 확인',
-                talkISP: 'ISP에 문의',
-                go: '시작',
-                reset: '초기화',
-                auto: '자동',
-                copied: '✅ 결과가 복사되었습니다!',
-                shared: '📤 공유되었습니다!',
-                clearConfirm: '🗑️ 모든 기록을 삭제?',
-                historyCleared: '기록이 삭제되었습니다!'
-            },
-            fr: {
-                ping: 'Ping',
-                upload: 'Téléchargement',
-                download: 'TÉLÉCHARGER',
-                testing: 'TEST EN COURS...',
-                complete: 'TERMINÉ',
-                avgDownload: 'Moyenne DL',
-                avgUpload: 'Moyenne UL',
-                avgPing: 'Ping moyen',
-                totalTests: 'Tests effectués',
-                noHistory: 'Aucun historique',
-                troubleshoot: 'Dépanner',
-                outages: 'Vérifier les pannes',
-                talkISP: 'Contacter FAI',
-                go: 'DÉMARRER',
-                reset: 'Réinitialiser',
-                auto: 'Auto',
-                copied: '✅ Résultats copiés!',
-                shared: '📤 Partage ouvert!',
-                clearConfirm: '🗑️ Effacer tout l\'historique?',
-                historyCleared: 'Historique effacé!'
-            },
-            de: {
-                ping: 'Ping',
-                upload: 'Hochladen',
-                download: 'DOWNLOAD',
-                testing: 'TEST LÄUFT...',
-                complete: 'FERTIG',
-                avgDownload: 'Ø Download',
-                avgUpload: 'Ø Upload',
-                avgPing: 'Ø Ping',
-                totalTests: 'Tests gesamt',
-                noHistory: 'Kein Verlauf',
-                troubleshoot: 'Fehlerbehebung',
-                outages: 'Störungen prüfen',
-                talkISP: 'ISP kontaktieren',
-                go: 'START',
-                reset: 'Zurücksetzen',
-                auto: 'Auto',
-                copied: '✅ Ergebnisse kopiert!',
-                shared: '📤 Freigabe geöffnet!',
-                clearConfirm: '🗑️ Verlauf löschen?',
-                historyCleared: 'Verlauf gelöscht!'
-            },
-            es: {
-                ping: 'Ping',
-                upload: 'Subida',
-                download: 'DESCARGAR',
-                testing: 'PROBANDO...',
-                complete: 'COMPLETO',
-                avgDownload: 'Prom. Descarga',
-                avgUpload: 'Prom. Subida',
-                avgPing: 'Prom. Ping',
-                totalTests: 'Pruebas totales',
-                noHistory: 'Sin historial',
-                troubleshoot: 'Solucionar',
-                outages: 'Verificar caídas',
-                talkISP: 'Hablar con ISP',
-                go: 'INICIAR',
-                reset: 'Reiniciar',
-                auto: 'Auto',
-                copied: '✅ Resultados copiados!',
-                shared: '📤 Compartir abierto!',
-                clearConfirm: '🗑️ Borrar historial?',
-                historyCleared: 'Historial borrado!'
-            },
-            ru: {
-                ping: 'Пинг',
-                upload: 'Загрузка',
-                download: 'СКАЧАТЬ',
-                testing: 'ТЕСТИРОВАНИЕ...',
-                complete: 'ЗАВЕРШЕНО',
-                avgDownload: 'Ср. скачивание',
-                avgUpload: 'Ср. загрузка',
-                avgPing: 'Ср. пинг',
-                totalTests: 'Всего тестов',
-                noHistory: 'Нет истории',
-                troubleshoot: 'Диагностика',
-                outages: 'Проверка сбоев',
-                talkISP: 'Связаться с ISP',
-                go: 'СТАРТ',
-                reset: 'Сброс',
-                auto: 'Авто',
-                copied: '✅ Результаты скопированы!',
-                shared: '📤 Общий доступ открыт!',
-                clearConfirm: '🗑️ Очистить историю?',
-                historyCleared: 'История очищена!'
-            },
-            ar: {
-                ping: 'بينغ',
-                upload: 'رفع',
-                download: 'تحميل',
-                testing: 'جاري الاختبار...',
-                complete: 'اكتمل',
-                avgDownload: 'متوسط التحميل',
-                avgUpload: 'متوسط الرفع',
-                avgPing: 'متوسط البينغ',
-                totalTests: 'عدد الاختبارات',
-                noHistory: 'لا يوجد سجل',
-                troubleshoot: 'استكشاف الأخطاء',
-                outages: 'فحص الانقطاعات',
-                talkISP: 'التواصل مع مزود الخدمة',
-                go: 'ابدأ',
-                reset: 'إعادة تعيين',
-                auto: 'تلقائي',
-                copied: '✅ تم نسخ النتائج!',
-                shared: '📤 تم فتح المشاركة!',
-                clearConfirm: '🗑️ حذف جميع السجلات؟',
-                historyCleared: 'تم حذف السجلات!'
-            }
-        };
-
-        // ============================================
-        // APP STATE
-        // ============================================
-        let currentLang = 'vi';
-        let history = [];
-        let autoInterval = null;
-        let isAuto = false;
-        let isTesting = false;
-
-        // ============================================
-        // DOM REFS
-        // ============================================
-        const $ = (id) => document.getElementById(id);
-        const $$ = (sel) => document.querySelectorAll(sel);
-
-        const themeToggle = $('themeToggle');
-        const menuBtn = $('menuBtn');
-        const dropdownMenu = $('dropdownMenu');
-        const langToggle = $('langToggle');
-        const langSubmenu = $('langSubmenu');
-        const aboutBtn = $('aboutBtn');
-        const clearHistoryBtn = $('clearHistoryBtn');
-        const testBtn = $('testBtn');
-        const resetBtn = $('resetBtn');
-        const autoBtn = $('autoBtn');
-        const shareBtn = $('shareBtn');
-        const copyBtn = $('copyBtn');
-        const gaugeValue = $('gaugeValue');
-        const gaugeLabel = $('gaugeLabel');
-        const progressCircle = $('progressCircle');
-        const pingDisplay = $('pingDisplay');
-        const uploadDisplay = $('uploadDisplay');
-        const avgDownload = $('avgDownload');
-        const avgUpload = $('avgUpload');
-        const avgPing = $('avgPing');
-        const totalTests = $('totalTests');
-        const historyList = $('historyList');
-        const toast = $('toast');
-
-        const circumference = 2 * Math.PI * 100;
-        let toastTimer = null;
-
-        // ============================================
-        // LANGUAGE FUNCTIONS
-        // ============================================
-        function setLanguage(lang) {
-            currentLang = lang;
-            const t = translations[lang] || translations.vi;
-
-            // Update all elements with data-key
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.dataset.key;
-                if (t[key] !== undefined) {
-                    el.textContent = t[key];
-                }
-            });
-
-            // Special elements
-            gaugeLabel.textContent = t.download;
-            const pingLabel = document.querySelector('.ping-item .label[data-key="ping"]');
-            const uploadLabel = document.querySelector('.ping-item .label[data-key="upload"]');
-            if (pingLabel) pingLabel.textContent = t.ping;
-            if (uploadLabel) uploadLabel.textContent = t.upload;
-
-            // Update no history text
-            const noHistoryEl = historyList.querySelector('[data-key="noHistory"]');
-            if (noHistoryEl && history.length === 0) {
-                noHistoryEl.textContent = t.noHistory;
-            }
-
-            localStorage.setItem('shadow-lang', lang);
-        }
-
-        // ============================================
-        // TOAST NOTIFICATION
-        // ============================================
-        function showToast(msg) {
-            toast.textContent = msg;
-            toast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        // ============================================
-        // HISTORY & STATS
-        // ============================================
-        function addHistory(download, upload, ping) {
-            history.push({ download, upload, ping, time: new Date().toLocaleString() });
-            if (history.length > 50) history.shift();
-            localStorage.setItem('shadow-history', JSON.stringify(history));
-            renderHistory();
-            updateStats();
-        }
-
-        function renderHistory() {
-            const t = translations[currentLang];
-            historyList.innerHTML = '';
-            if (history.length === 0) {
-                historyList.innerHTML = `<div style="text-align:center;color:var(--text-secondary);padding:10px;font-size:13px;" data-key="noHistory">${t.noHistory}</div>`;
-                return;
-            }
-            // Show latest first
-            const reversed = [...history].reverse();
-            reversed.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'history-item';
-                div.innerHTML = `
-                    <span>${item.time}</span>
-                    <span>⬇${item.download} Mbps ⬆${item.upload} Mbps 🏓${item.ping} ms</span>
-                `;
-                historyList.appendChild(div);
-            });
-        }
-
-        function updateStats() {
-            if (history.length === 0) {
-                avgDownload.textContent = '--';
-                avgUpload.textContent = '--';
-                avgPing.textContent = '--';
-                totalTests.textContent = '0';
-                return;
-            }
-            const total = history.length;
-            const sumD = history.reduce((a, b) => a + b.download, 0);
-            const sumU = history.reduce((a, b) => a + b.upload, 0);
-            const sumP = history.reduce((a, b) => a + b.ping, 0);
-            avgDownload.textContent = (sumD / total).toFixed(1);
-            avgUpload.textContent = (sumU / total).toFixed(1);
-            avgPing.textContent = (sumP / total).toFixed(0);
-            totalTests.textContent = total;
-        }
-
-        function clearHistory() {
-            const t = translations[currentLang];
-            if (confirm(t.clearConfirm)) {
-                history = [];
-                localStorage.removeItem('shadow-history');
-                renderHistory();
-                updateStats();
-                showToast(t.historyCleared);
-            }
-        }
-
-        // ============================================
-        // TEST FUNCTION
-        // ============================================
-        function runTest() {
-            if (isTesting) return;
-            isTesting = true;
-            const t = translations[currentLang];
-            document.querySelector('.container').classList.add('testing');
-
-            gaugeLabel.textContent = t.testing;
-            gaugeValue.innerHTML = '... <small>Mbps</small>';
-            pingDisplay.innerHTML = '... <small>ms</small>';
-            uploadDisplay.innerHTML = '... <small>Mbps</small>';
-
-            const steps = [
-                { delay: 700, label: 'Ping...', ping: (15 + Math.random() * 65).toFixed(0) },
-                { delay: 1800, label: 'Tải xuống...', download: (25 + Math.random() * 220).toFixed(1) },
-                { delay: 3000, label: 'Tải lên...', upload: (8 + Math.random() * 82).toFixed(1) }
-            ];
-
-            let pingVal = 0,
-                downVal = 0,
-                upVal = 0;
-
-            setTimeout(() => {
-                pingVal = parseFloat(steps[0].ping);
-                pingDisplay.innerHTML = `${pingVal} <small>ms</small>`;
-                gaugeLabel.textContent = steps[0].label;
-            }, steps[0].delay);
-
-            setTimeout(() => {
-                downVal = parseFloat(steps[1].download);
-                gaugeValue.innerHTML = `${downVal} <small>Mbps</small>`;
-                gaugeLabel.textContent = steps[1].label;
-                const offset = circumference - (downVal / 1000) * circumference;
-                progressCircle.style.strokeDashoffset = Math.max(0, Math.min(circumference, offset));
-            }, steps[1].delay);
-
-            setTimeout(() => {
-                upVal = parseFloat(steps[2].upload);
-                uploadDisplay.innerHTML = `${upVal} <small>Mbps</small>`;
-                gaugeLabel.textContent = t.complete;
-                isTesting = false;
-                document.querySelector('.container').classList.remove('testing');
-
-                // Save history
-                addHistory(downVal, upVal, pingVal);
-
-                // Play beep
-                try {
-                    const ctx = new(window.AudioContext || window.webkitAudioContext)();
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.frequency.value = 880;
-                    gain.gain.value = 0.1;
-                    osc.start();
-                    setTimeout(() => { osc.stop();
-                        ctx.close(); }, 200);
-                } catch (e) {}
-
-                showToast(`✅ ${downVal} Mbps / ${upVal} Mbps / ${pingVal} ms`);
-            }, steps[2].delay);
-        }
-
-        // ============================================
-        // RESET
-        // ============================================
-        function resetDisplay() {
-            if (isTesting) return;
-            const t = translations[currentLang];
-            gaugeValue.innerHTML = '0.00 <small>Mbps</small>';
-            pingDisplay.innerHTML = '-- <small>ms</small>';
-            uploadDisplay.innerHTML = '-- <small>Mbps</small>';
-            progressCircle.style.strokeDashoffset = circumference;
-            gaugeLabel.textContent = t.download;
-        }
-
-        // ============================================
-        // SHARE & COPY
-        // ============================================
-        function getResultsText() {
-            const t = translations[currentLang];
-            const download = gaugeValue.textContent.trim();
-            const ping = pingDisplay.textContent.trim();
-            const upload = uploadDisplay.textContent.trim();
-            return `🚀 SHADOW TEST SPEED v4.0\n⬇ Download: ${download}\n⬆ Upload: ${upload}\n🏓 Ping: ${ping}\n© Shadow Team 2026`;
-        }
-
-        function copyResults() {
-            const text = getResultsText();
-            navigator.clipboard?.writeText(text).then(() => {
-                showToast(translations[currentLang].copied);
-            }).catch(() => {
-                // Fallback
-                const ta = document.createElement('textarea');
-                ta.value = text;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                ta.remove();
-                showToast(translations[currentLang].copied);
-            });
-        }
-
-        function shareResults() {
-            const text = getResultsText();
-            if (navigator.share) {
-                navigator.share({ title: 'SHADOW TEST SPEED', text: text }).catch(() => {});
-            } else {
-                copyResults();
-                showToast(translations[currentLang].shared);
-            }
-        }
-
-        // ============================================
-        // AUTO MODE
-        // ============================================
-        function toggleAuto() {
-            const t = translations[currentLang];
-            if (isAuto) {
-                clearInterval(autoInterval);
-                autoInterval = null;
-                isAuto = false;
-                autoBtn.classList.remove('active-auto');
-                autoBtn.querySelector('span').textContent = t.auto;
-                showToast('⏹️ Auto stopped');
-            } else {
-                isAuto = true;
-                autoBtn.classList.add('active-auto');
-                autoBtn.querySelector('span').textContent = '⏹️ ' + t.auto;
-                showToast('▶️ Auto started - test every 30s');
-                runTest();
-                autoInterval = setInterval(() => {
-                    if (!isTesting) runTest();
-                }, 30000);
-            }
-        }
-
-        // ============================================
-        // THEME
-        // ============================================
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            const icon = themeToggle.querySelector('i');
-            icon.className = document.body.classList.contains('dark') ? 'fas fa-sun' : 'fas fa-moon';
-            localStorage.setItem('shadow-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-        }
-
-        // Load saved theme
-        if (localStorage.getItem('shadow-theme') === 'dark') {
-            document.body.classList.add('dark');
-            themeToggle.querySelector('i').className = 'fas fa-sun';
-        }
-
-        // ============================================
-        // EVENT LISTENERS
-        // ============================================
-        themeToggle.addEventListener('click', toggleTheme);
-
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('active');
-        });
-
-        document.addEventListener('click', () => {
-            dropdownMenu.classList.remove('active');
-            langSubmenu.classList.remove('active');
-        });
-
-        langToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            langSubmenu.classList.toggle('active');
-        });
-
-        document.querySelectorAll('.lang-submenu a').forEach(item => {
-            item.addEventListener('click', () => {
-                const lang = item.dataset.lang;
-                setLanguage(lang);
-                langSubmenu.classList.remove('active');
-                dropdownMenu.classList.remove('active');
-                showToast(`🌐 ${item.textContent.trim()}`);
-                // Re-render history with new language
-                renderHistory();
-                // Reset gauge label
-                gaugeLabel.textContent = translations[lang].download;
-            });
-        });
-
-        aboutBtn.addEventListener('click', () => {
-            alert(
-                'SHADOW TEST SPEED v4.0\n\n👤 Created by: Minh Trí\n🏢 Team: Shadow Team\n📅 © 2026 Shadow Team - All Rights Reserved\n\n🌐 Multi-language support\n📊 History & Statistics\n🔄 Auto test mode\n📤 Share & Copy results\n\n⚡ Giao diện kiểm tra tốc độ mạng huyền ảo.'
-                );
-            dropdownMenu.classList.remove('active');
-        });
-
-        clearHistoryBtn.addEventListener('click', () => {
-            clearHistory();
-            dropdownMenu.classList.remove('active');
-        });
-
-        testBtn.addEventListener('click', runTest);
-        resetBtn.addEventListener('click', resetDisplay);
-        autoBtn.addEventListener('click', toggleAuto);
-        shareBtn.addEventListener('click', shareResults);
-        copyBtn.addEventListener('click', copyResults);
-
-        // Click on gauge also triggers test
-        document.querySelector('.speed-gauge').addEventListener('click', runTest);
-
-        // ============================================
-        // LOAD SAVED DATA
-        // ============================================
-        // Load language
-        const savedLang = localStorage.getItem('shadow-lang') || 'vi';
-        setLanguage(savedLang);
-
-        // Load history
-        const savedHistory = localStorage.getItem('shadow-history');
-        if (savedHistory) {
-            try {
-                history = JSON.parse(savedHistory);
-                if (!Array.isArray(history)) history = [];
-            } catch (e) { history = []; }
-        }
-        renderHistory();
-        updateStats();
-
-        // Init gauge
-        progressCircle.style.strokeDashoffset = circumference;
-
-        console.log('👻 SHADOW TEST SPEED v4.0 - Multi-language, History, Auto, Share!');
-    </script>
 
 </body>
 </html>
