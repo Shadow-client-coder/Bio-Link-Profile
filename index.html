@@ -14,7 +14,6 @@
             transition: background 0.3s, color 0.3s, border-color 0.3s;
         }
 
-        /* === LIGHT MODE (mặc định) === */
         :root {
             --bg-primary: #f5f0ff;
             --bg-secondary: #ffffff;
@@ -27,9 +26,10 @@
             --accent-light: #b77aff;
             --glass-bg: rgba(255, 255, 255, 0.7);
             --glass-border: rgba(180, 80, 255, 0.2);
+            --success: #00c853;
+            --danger: #ff1744;
         }
 
-        /* === DARK MODE === */
         body.dark {
             --bg-primary: #0b0710;
             --bg-secondary: #1a0f2a;
@@ -63,7 +63,7 @@
         }
 
         .container {
-            max-width: 820px;
+            max-width: 900px;
             width: 100%;
             background: var(--glass-bg);
             backdrop-filter: blur(14px);
@@ -76,12 +76,13 @@
             z-index: 2;
         }
 
-        /* === HEADER === */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .logo-area {
@@ -107,10 +108,11 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        .theme-toggle {
+        .header-btn {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
@@ -118,28 +120,17 @@
             height: 40px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .menu-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
         }
 
-        /* === MENU DROPDOWN === */
+        .header-btn:hover {
+            border-color: var(--accent);
+        }
+
         .dropdown-menu {
             display: none;
             position: absolute;
@@ -150,6 +141,8 @@
             border-radius: 16px;
             padding: 12px 0;
             min-width: 220px;
+            max-height: 400px;
+            overflow-y: auto;
             box-shadow: 0 15px 40px var(--shadow-color);
             z-index: 10;
         }
@@ -191,22 +184,33 @@
             padding: 6px 20px;
         }
 
-        /* === MAIN DISPLAY === */
         .main-display {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 10px 0 25px;
+            justify-content: center;
+            margin: 10px 0 20px;
+            width: 100%;
+        }
+
+        .gauge-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
         }
 
         .speed-gauge {
             position: relative;
             width: 260px;
             height: 260px;
+            flex-shrink: 0;
         }
 
         .speed-gauge svg {
             transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
         }
 
         .speed-gauge .bg-circle {
@@ -231,12 +235,15 @@
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
+            width: 100%;
+            pointer-events: none;
         }
 
         .gauge-value {
             font-size: 42px;
             font-weight: 700;
             color: var(--text-primary);
+            line-height: 1;
         }
 
         .gauge-value small {
@@ -257,6 +264,8 @@
             justify-content: center;
             gap: 40px;
             margin-top: 15px;
+            width: 100%;
+            flex-wrap: wrap;
         }
 
         .ping-item {
@@ -281,13 +290,12 @@
             letter-spacing: 1px;
         }
 
-        /* === INFO CARD === */
         .info-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 24px;
             padding: 20px 25px;
-            margin: 20px 0;
+            margin: 15px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -333,7 +341,6 @@
             color: var(--accent);
         }
 
-        /* === BUTTONS ROW === */
         .action-row {
             display: flex;
             gap: 12px;
@@ -352,7 +359,7 @@
             font-weight: 500;
             cursor: pointer;
             flex: 1;
-            min-width: 140px;
+            min-width: 120px;
             max-width: 200px;
         }
 
@@ -371,7 +378,64 @@
             opacity: 0.85;
         }
 
-        /* === FOOTER === */
+        .action-btn.active-auto {
+            background: var(--success);
+            border-color: var(--success);
+            color: #fff;
+        }
+
+        /* Stats & History */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .stats-grid .stat-item {
+            text-align: center;
+        }
+
+        .stats-grid .stat-item .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stats-grid .stat-item .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .history-list {
+            max-height: 150px;
+            overflow-y: auto;
+            margin: 10px 0;
+            padding: 10px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .history-list .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .history-list .history-item:last-child {
+            border-bottom: none;
+        }
+
         .footer {
             text-align: center;
             margin-top: 25px;
@@ -387,7 +451,39 @@
             font-weight: 600;
         }
 
-        /* === RESPONSIVE === */
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 40px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            z-index: 100;
+            display: none;
+            font-size: 14px;
+            animation: slideUp 0.3s ease;
+        }
+
+        .toast.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px 15px;
@@ -396,20 +492,41 @@
             .logo-text {
                 font-size: 18px;
             }
+            .logo-icon {
+                font-size: 22px;
+            }
+            .header-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
             .speed-gauge {
                 width: 200px;
                 height: 200px;
             }
             .gauge-value {
-                font-size: 32px;
+                font-size: 30px;
+            }
+            .gauge-value small {
+                font-size: 14px;
+            }
+            .gauge-label {
+                font-size: 12px;
             }
             .ping-row {
-                gap: 20px;
+                gap: 25px;
+            }
+            .ping-item .value {
+                font-size: 22px;
+            }
+            .ping-item .value small {
+                font-size: 12px;
             }
             .info-card {
                 flex-direction: column;
                 align-items: stretch;
                 text-align: center;
+                padding: 15px;
             }
             .info-right {
                 justify-content: center;
@@ -419,9 +536,34 @@
                 font-size: 12px;
                 padding: 10px 16px;
             }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 12px;
+            }
+            .footer {
+                font-size: 11px;
+            }
         }
 
-        /* === TESTING ANIMATION === */
+        @media (max-width: 400px) {
+            .speed-gauge {
+                width: 160px;
+                height: 160px;
+            }
+            .gauge-value {
+                font-size: 24px;
+            }
+            .gauge-value small {
+                font-size: 12px;
+            }
+            .ping-row {
+                gap: 15px;
+            }
+            .ping-item .value {
+                font-size: 18px;
+            }
+        }
+
         .testing .progress-circle {
             animation: pulse-stroke 0.8s infinite alternate;
         }
@@ -440,7 +582,7 @@
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="app">
         <!-- HEADER -->
         <div class="header">
             <div class="logo-area">
@@ -448,56 +590,90 @@
                 <span class="logo-text">SHADOW TEST</span>
             </div>
             <div class="header-right">
-                <button class="theme-toggle" id="themeToggle" title="Chế độ sáng/tối">
+                <button class="header-btn" id="themeToggle" title="Chế độ sáng/tối">
                     <i class="fas fa-moon"></i>
                 </button>
+                <button class="header-btn" id="shareBtn" title="Chia sẻ kết quả">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                <button class="header-btn" id="copyBtn" title="Sao chép kết quả">
+                    <i class="fas fa-copy"></i>
+                </button>
                 <div style="position:relative;">
-                    <button class="menu-btn" id="menuBtn">
+                    <button class="header-btn" id="menuBtn">
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <a id="langToggle">Ngôn ngữ / Language</a>
+                        <a id="langToggle">🌐 Ngôn ngữ / Language</a>
                         <div class="lang-submenu" id="langSubmenu">
-                            <a data-lang="vi">Tiếng Việt</a>
-                            <a data-lang="en">English</a>
-                            <a data-lang="zh">中文</a>
-                            <a data-lang="ja">日本語</a>
-                            <a data-lang="ko">한국어</a>
-                            <a data-lang="fr">Français</a>
-                            <a data-lang="de">Deutsch</a>
-                            <a data-lang="es">Español</a>
-                            <a data-lang="ru">Русский</a>
-                            <a data-lang="ar">العربية</a>
+                            <a data-lang="vi">🇻🇳 Tiếng Việt</a>
+                            <a data-lang="en">🇬🇧 English</a>
+                            <a data-lang="zh">🇨🇳 中文</a>
+                            <a data-lang="ja">🇯🇵 日本語</a>
+                            <a data-lang="ko">🇰🇷 한국어</a>
+                            <a data-lang="fr">🇫🇷 Français</a>
+                            <a data-lang="de">🇩🇪 Deutsch</a>
+                            <a data-lang="es">🇪🇸 Español</a>
+                            <a data-lang="ru">🇷🇺 Русский</a>
+                            <a data-lang="ar">🇸🇦 العربية</a>
                         </div>
                         <div class="divider"></div>
-                        <a id="aboutBtn">About</a>
+                        <a id="clearHistoryBtn">🗑️ Xóa lịch sử</a>
+                        <a id="aboutBtn">ℹ️ About</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- MAIN GAUGE -->
+        <!-- MAIN DISPLAY -->
         <div class="main-display">
-            <div class="speed-gauge" id="gaugeContainer">
-                <svg width="260" height="260" viewBox="0 0 260 260">
-                    <circle class="bg-circle" cx="130" cy="130" r="100" />
-                    <circle class="progress-circle" id="progressCircle" cx="130" cy="130" r="100" />
-                </svg>
-                <div class="gauge-center">
-                    <div class="gauge-value" id="gaugeValue">0.00 <small>Mbps</small></div>
-                    <div class="gauge-label" id="gaugeLabel">TẢI XUỐNG</div>
+            <div class="gauge-wrapper">
+                <div class="speed-gauge" id="gaugeContainer">
+                    <svg width="260" height="260" viewBox="0 0 260 260">
+                        <circle class="bg-circle" cx="130" cy="130" r="100" />
+                        <circle class="progress-circle" id="progressCircle" cx="130" cy="130" r="100" />
+                    </svg>
+                    <div class="gauge-center">
+                        <div class="gauge-value" id="gaugeValue">0.00 <small>Mbps</small></div>
+                        <div class="gauge-label" id="gaugeLabel">TẢI XUỐNG</div>
+                    </div>
                 </div>
             </div>
             <div class="ping-row">
                 <div class="ping-item">
                     <div class="value" id="pingDisplay">-- <small>ms</small></div>
-                    <div class="label">Ping</div>
+                    <div class="label" data-key="ping">Ping</div>
                 </div>
                 <div class="ping-item">
                     <div class="value" id="uploadDisplay">-- <small>Mbps</small></div>
-                    <div class="label">Tải lên</div>
+                    <div class="label" data-key="upload">Tải lên</div>
                 </div>
             </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-item">
+                <div class="stat-value" id="avgDownload">--</div>
+                <div class="stat-label" data-key="avgDownload">TB Tải xuống</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="avgUpload">--</div>
+                <div class="stat-label" data-key="avgUpload">TB Tải lên</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="avgPing">--</div>
+                <div class="stat-label" data-key="avgPing">TB Ping</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="totalTests">0</div>
+                <div class="stat-label" data-key="totalTests">Số lần test</div>
+            </div>
+        </div>
+
+        <!-- HISTORY -->
+        <div class="history-list" id="historyList">
+            <div style="text-align:center;color:var(--text-secondary);padding:10px;font-size:13px;" data-key="noHistory">Chưa có lịch sử test</div>
         </div>
 
         <!-- INFO CARD -->
@@ -507,16 +683,17 @@
                 <div class="detail" id="ipDetail">1.52.34.168 · Tam Ky</div>
             </div>
             <div class="info-right">
-                <span class="badge"><i class="fas fa-wifi"></i> Troubleshoot</span>
-                <span class="badge"><i class="fas fa-exclamation-triangle"></i> Check Outages</span>
-                <span class="badge"><i class="fas fa-headset"></i> Talk to ISP</span>
+                <span class="badge" onclick="alert('🔧 Đang kiểm tra Wi-Fi...')"><i class="fas fa-wifi"></i> <span data-key="troubleshoot">Troubleshoot</span></span>
+                <span class="badge" onclick="alert('📡 Đang kiểm tra mất kết nối...')"><i class="fas fa-exclamation-triangle"></i> <span data-key="outages">Check Outages</span></span>
+                <span class="badge" onclick="alert('📞 Đang kết nối ISP...')"><i class="fas fa-headset"></i> <span data-key="talkISP">Talk to ISP</span></span>
             </div>
         </div>
 
         <!-- ACTION BUTTONS -->
         <div class="action-row">
-            <button class="action-btn primary" id="testBtn"><i class="fas fa-play"></i> GO</button>
-            <button class="action-btn" id="resetBtn"><i class="fas fa-undo"></i> Reset</button>
+            <button class="action-btn primary" id="testBtn"><i class="fas fa-play"></i> <span data-key="go">GO</span></button>
+            <button class="action-btn" id="resetBtn"><i class="fas fa-undo"></i> <span data-key="reset">Reset</span></button>
+            <button class="action-btn" id="autoBtn"><i class="fas fa-clock"></i> <span data-key="auto">Auto</span></button>
         </div>
 
         <!-- FOOTER -->
@@ -525,98 +702,397 @@
         </div>
     </div>
 
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
     <script>
-        // === DOM ===
-        const themeToggle = document.getElementById('themeToggle');
-        const menuBtn = document.getElementById('menuBtn');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const langToggle = document.getElementById('langToggle');
-        const langSubmenu = document.getElementById('langSubmenu');
-        const aboutBtn = document.getElementById('aboutBtn');
-        const testBtn = document.getElementById('testBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        const gaugeValue = document.getElementById('gaugeValue');
-        const gaugeLabel = document.getElementById('gaugeLabel');
-        const progressCircle = document.getElementById('progressCircle');
-        const pingDisplay = document.getElementById('pingDisplay');
-        const uploadDisplay = document.getElementById('uploadDisplay');
-        const container = document.querySelector('.container');
+        // ============================================
+        // LANGUAGE DATA
+        // ============================================
+        const translations = {
+            vi: {
+                ping: 'Ping',
+                upload: 'Tải lên',
+                download: 'TẢI XUỐNG',
+                testing: 'ĐANG TEST...',
+                complete: 'HOÀN TẤT',
+                avgDownload: 'TB Tải xuống',
+                avgUpload: 'TB Tải lên',
+                avgPing: 'TB Ping',
+                totalTests: 'Số lần test',
+                noHistory: 'Chưa có lịch sử test',
+                troubleshoot: 'Troubleshoot',
+                outages: 'Check Outages',
+                talkISP: 'Talk to ISP',
+                go: 'GO',
+                reset: 'Reset',
+                auto: 'Auto',
+                copied: '✅ Đã sao chép kết quả!',
+                shared: '📤 Đã mở chia sẻ!',
+                clearConfirm: '🗑️ Xóa tất cả lịch sử?',
+                historyCleared: 'Đã xóa lịch sử!'
+            },
+            en: {
+                ping: 'Ping',
+                upload: 'Upload',
+                download: 'DOWNLOAD',
+                testing: 'TESTING...',
+                complete: 'COMPLETE',
+                avgDownload: 'Avg Download',
+                avgUpload: 'Avg Upload',
+                avgPing: 'Avg Ping',
+                totalTests: 'Total Tests',
+                noHistory: 'No test history',
+                troubleshoot: 'Troubleshoot',
+                outages: 'Check Outages',
+                talkISP: 'Talk to ISP',
+                go: 'GO',
+                reset: 'Reset',
+                auto: 'Auto',
+                copied: '✅ Results copied!',
+                shared: '📤 Share opened!',
+                clearConfirm: '🗑️ Clear all history?',
+                historyCleared: 'History cleared!'
+            },
+            zh: {
+                ping: '延迟',
+                upload: '上传',
+                download: '下载',
+                testing: '测试中...',
+                complete: '完成',
+                avgDownload: '平均下载',
+                avgUpload: '平均上传',
+                avgPing: '平均延迟',
+                totalTests: '测试次数',
+                noHistory: '暂无测试记录',
+                troubleshoot: '故障排除',
+                outages: '检查中断',
+                talkISP: '联系ISP',
+                go: '开始',
+                reset: '重置',
+                auto: '自动',
+                copied: '✅ 已复制结果!',
+                shared: '📤 已分享!',
+                clearConfirm: '🗑️ 清除所有记录?',
+                historyCleared: '已清除记录!'
+            },
+            ja: {
+                ping: 'Ping',
+                upload: 'アップロード',
+                download: 'ダウンロード',
+                testing: 'テスト中...',
+                complete: '完了',
+                avgDownload: '平均ダウンロード',
+                avgUpload: '平均アップロード',
+                avgPing: '平均Ping',
+                totalTests: 'テスト回数',
+                noHistory: 'テスト履歴なし',
+                troubleshoot: 'トラブルシュート',
+                outages: '障害確認',
+                talkISP: 'ISPに連絡',
+                go: '開始',
+                reset: 'リセット',
+                auto: '自動',
+                copied: '✅ 結果をコピーしました!',
+                shared: '📤 共有しました!',
+                clearConfirm: '🗑️ 履歴を全て削除?',
+                historyCleared: '履歴を削除しました!'
+            },
+            ko: {
+                ping: '핑',
+                upload: '업로드',
+                download: '다운로드',
+                testing: '테스트 중...',
+                complete: '완료',
+                avgDownload: '평균 다운로드',
+                avgUpload: '평균 업로드',
+                avgPing: '평균 핑',
+                totalTests: '테스트 횟수',
+                noHistory: '테스트 기록 없음',
+                troubleshoot: '문제 해결',
+                outages: '장애 확인',
+                talkISP: 'ISP에 문의',
+                go: '시작',
+                reset: '초기화',
+                auto: '자동',
+                copied: '✅ 결과가 복사되었습니다!',
+                shared: '📤 공유되었습니다!',
+                clearConfirm: '🗑️ 모든 기록을 삭제?',
+                historyCleared: '기록이 삭제되었습니다!'
+            },
+            fr: {
+                ping: 'Ping',
+                upload: 'Téléchargement',
+                download: 'TÉLÉCHARGER',
+                testing: 'TEST EN COURS...',
+                complete: 'TERMINÉ',
+                avgDownload: 'Moyenne DL',
+                avgUpload: 'Moyenne UL',
+                avgPing: 'Ping moyen',
+                totalTests: 'Tests effectués',
+                noHistory: 'Aucun historique',
+                troubleshoot: 'Dépanner',
+                outages: 'Vérifier les pannes',
+                talkISP: 'Contacter FAI',
+                go: 'DÉMARRER',
+                reset: 'Réinitialiser',
+                auto: 'Auto',
+                copied: '✅ Résultats copiés!',
+                shared: '📤 Partage ouvert!',
+                clearConfirm: '🗑️ Effacer tout l\'historique?',
+                historyCleared: 'Historique effacé!'
+            },
+            de: {
+                ping: 'Ping',
+                upload: 'Hochladen',
+                download: 'DOWNLOAD',
+                testing: 'TEST LÄUFT...',
+                complete: 'FERTIG',
+                avgDownload: 'Ø Download',
+                avgUpload: 'Ø Upload',
+                avgPing: 'Ø Ping',
+                totalTests: 'Tests gesamt',
+                noHistory: 'Kein Verlauf',
+                troubleshoot: 'Fehlerbehebung',
+                outages: 'Störungen prüfen',
+                talkISP: 'ISP kontaktieren',
+                go: 'START',
+                reset: 'Zurücksetzen',
+                auto: 'Auto',
+                copied: '✅ Ergebnisse kopiert!',
+                shared: '📤 Freigabe geöffnet!',
+                clearConfirm: '🗑️ Verlauf löschen?',
+                historyCleared: 'Verlauf gelöscht!'
+            },
+            es: {
+                ping: 'Ping',
+                upload: 'Subida',
+                download: 'DESCARGAR',
+                testing: 'PROBANDO...',
+                complete: 'COMPLETO',
+                avgDownload: 'Prom. Descarga',
+                avgUpload: 'Prom. Subida',
+                avgPing: 'Prom. Ping',
+                totalTests: 'Pruebas totales',
+                noHistory: 'Sin historial',
+                troubleshoot: 'Solucionar',
+                outages: 'Verificar caídas',
+                talkISP: 'Hablar con ISP',
+                go: 'INICIAR',
+                reset: 'Reiniciar',
+                auto: 'Auto',
+                copied: '✅ Resultados copiados!',
+                shared: '📤 Compartir abierto!',
+                clearConfirm: '🗑️ Borrar historial?',
+                historyCleared: 'Historial borrado!'
+            },
+            ru: {
+                ping: 'Пинг',
+                upload: 'Загрузка',
+                download: 'СКАЧАТЬ',
+                testing: 'ТЕСТИРОВАНИЕ...',
+                complete: 'ЗАВЕРШЕНО',
+                avgDownload: 'Ср. скачивание',
+                avgUpload: 'Ср. загрузка',
+                avgPing: 'Ср. пинг',
+                totalTests: 'Всего тестов',
+                noHistory: 'Нет истории',
+                troubleshoot: 'Диагностика',
+                outages: 'Проверка сбоев',
+                talkISP: 'Связаться с ISP',
+                go: 'СТАРТ',
+                reset: 'Сброс',
+                auto: 'Авто',
+                copied: '✅ Результаты скопированы!',
+                shared: '📤 Общий доступ открыт!',
+                clearConfirm: '🗑️ Очистить историю?',
+                historyCleared: 'История очищена!'
+            },
+            ar: {
+                ping: 'بينغ',
+                upload: 'رفع',
+                download: 'تحميل',
+                testing: 'جاري الاختبار...',
+                complete: 'اكتمل',
+                avgDownload: 'متوسط التحميل',
+                avgUpload: 'متوسط الرفع',
+                avgPing: 'متوسط البينغ',
+                totalTests: 'عدد الاختبارات',
+                noHistory: 'لا يوجد سجل',
+                troubleshoot: 'استكشاف الأخطاء',
+                outages: 'فحص الانقطاعات',
+                talkISP: 'التواصل مع مزود الخدمة',
+                go: 'ابدأ',
+                reset: 'إعادة تعيين',
+                auto: 'تلقائي',
+                copied: '✅ تم نسخ النتائج!',
+                shared: '📤 تم فتح المشاركة!',
+                clearConfirm: '🗑️ حذف جميع السجلات؟',
+                historyCleared: 'تم حذف السجلات!'
+            }
+        };
+
+        // ============================================
+        // APP STATE
+        // ============================================
+        let currentLang = 'vi';
+        let history = [];
+        let autoInterval = null;
+        let isAuto = false;
+        let isTesting = false;
+
+        // ============================================
+        // DOM REFS
+        // ============================================
+        const $ = (id) => document.getElementById(id);
+        const $$ = (sel) => document.querySelectorAll(sel);
+
+        const themeToggle = $('themeToggle');
+        const menuBtn = $('menuBtn');
+        const dropdownMenu = $('dropdownMenu');
+        const langToggle = $('langToggle');
+        const langSubmenu = $('langSubmenu');
+        const aboutBtn = $('aboutBtn');
+        const clearHistoryBtn = $('clearHistoryBtn');
+        const testBtn = $('testBtn');
+        const resetBtn = $('resetBtn');
+        const autoBtn = $('autoBtn');
+        const shareBtn = $('shareBtn');
+        const copyBtn = $('copyBtn');
+        const gaugeValue = $('gaugeValue');
+        const gaugeLabel = $('gaugeLabel');
+        const progressCircle = $('progressCircle');
+        const pingDisplay = $('pingDisplay');
+        const uploadDisplay = $('uploadDisplay');
+        const avgDownload = $('avgDownload');
+        const avgUpload = $('avgUpload');
+        const avgPing = $('avgPing');
+        const totalTests = $('totalTests');
+        const historyList = $('historyList');
+        const toast = $('toast');
 
         const circumference = 2 * Math.PI * 100;
+        let toastTimer = null;
 
-        let isTesting = false;
-        let currentLang = 'vi';
+        // ============================================
+        // LANGUAGE FUNCTIONS
+        // ============================================
+        function setLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang] || translations.vi;
 
-        // === THEME ===
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark');
-            const icon = themeToggle.querySelector('i');
-            if (document.body.classList.contains('dark')) {
-                icon.className = 'fas fa-sun';
-            } else {
-                icon.className = 'fas fa-moon';
-            }
-        });
-
-        // === MENU ===
-        menuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdownMenu.classList.toggle('active');
-        });
-
-        document.addEventListener('click', () => {
-            dropdownMenu.classList.remove('active');
-            langSubmenu.classList.remove('active');
-        });
-
-        langToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            langSubmenu.classList.toggle('active');
-        });
-
-        // === LANGUAGE (demo) ===
-        document.querySelectorAll('.lang-submenu a').forEach(item => {
-            item.addEventListener('click', () => {
-                currentLang = item.dataset.lang;
-                alert('Đã chuyển sang ngôn ngữ: ' + item.textContent + ' (Demo)');
-                langSubmenu.classList.remove('active');
-                dropdownMenu.classList.remove('active');
+            // Update all elements with data-key
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.dataset.key;
+                if (t[key] !== undefined) {
+                    el.textContent = t[key];
+                }
             });
-        });
 
-        // === ABOUT ===
-        aboutBtn.addEventListener('click', () => {
-            alert(
-                'SHADOW TEST SPEED\nVersion 4.0\n\nCreated by: Minh Trí\nTeam: Shadow Team\n© 2026 Shadow Team - All Rights Reserved\n\nGiao diện kiểm tra tốc độ mạng huyền ảo.'
-                );
-            dropdownMenu.classList.remove('active');
-        });
+            // Special elements
+            gaugeLabel.textContent = t.download;
+            const pingLabel = document.querySelector('.ping-item .label[data-key="ping"]');
+            const uploadLabel = document.querySelector('.ping-item .label[data-key="upload"]');
+            if (pingLabel) pingLabel.textContent = t.ping;
+            if (uploadLabel) uploadLabel.textContent = t.upload;
 
-        // === RESET ===
-        resetBtn.addEventListener('click', () => {
-            if (isTesting) return;
-            gaugeValue.innerHTML = '0.00 <small>Mbps</small>';
-            pingDisplay.innerHTML = '-- <small>ms</small>';
-            uploadDisplay.innerHTML = '-- <small>Mbps</small>';
-            progressCircle.style.strokeDashoffset = circumference;
-            gaugeLabel.textContent = 'TẢI XUỐNG';
-        });
+            // Update no history text
+            const noHistoryEl = historyList.querySelector('[data-key="noHistory"]');
+            if (noHistoryEl && history.length === 0) {
+                noHistoryEl.textContent = t.noHistory;
+            }
 
-        // === TEST ===
+            localStorage.setItem('shadow-lang', lang);
+        }
+
+        // ============================================
+        // TOAST NOTIFICATION
+        // ============================================
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ============================================
+        // HISTORY & STATS
+        // ============================================
+        function addHistory(download, upload, ping) {
+            history.push({ download, upload, ping, time: new Date().toLocaleString() });
+            if (history.length > 50) history.shift();
+            localStorage.setItem('shadow-history', JSON.stringify(history));
+            renderHistory();
+            updateStats();
+        }
+
+        function renderHistory() {
+            const t = translations[currentLang];
+            historyList.innerHTML = '';
+            if (history.length === 0) {
+                historyList.innerHTML = `<div style="text-align:center;color:var(--text-secondary);padding:10px;font-size:13px;" data-key="noHistory">${t.noHistory}</div>`;
+                return;
+            }
+            // Show latest first
+            const reversed = [...history].reverse();
+            reversed.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.innerHTML = `
+                    <span>${item.time}</span>
+                    <span>⬇${item.download} Mbps ⬆${item.upload} Mbps 🏓${item.ping} ms</span>
+                `;
+                historyList.appendChild(div);
+            });
+        }
+
+        function updateStats() {
+            if (history.length === 0) {
+                avgDownload.textContent = '--';
+                avgUpload.textContent = '--';
+                avgPing.textContent = '--';
+                totalTests.textContent = '0';
+                return;
+            }
+            const total = history.length;
+            const sumD = history.reduce((a, b) => a + b.download, 0);
+            const sumU = history.reduce((a, b) => a + b.upload, 0);
+            const sumP = history.reduce((a, b) => a + b.ping, 0);
+            avgDownload.textContent = (sumD / total).toFixed(1);
+            avgUpload.textContent = (sumU / total).toFixed(1);
+            avgPing.textContent = (sumP / total).toFixed(0);
+            totalTests.textContent = total;
+        }
+
+        function clearHistory() {
+            const t = translations[currentLang];
+            if (confirm(t.clearConfirm)) {
+                history = [];
+                localStorage.removeItem('shadow-history');
+                renderHistory();
+                updateStats();
+                showToast(t.historyCleared);
+            }
+        }
+
+        // ============================================
+        // TEST FUNCTION
+        // ============================================
         function runTest() {
             if (isTesting) return;
             isTesting = true;
-            container.classList.add('testing');
+            const t = translations[currentLang];
+            document.querySelector('.container').classList.add('testing');
 
-            gaugeLabel.textContent = 'ĐANG TEST...';
+            gaugeLabel.textContent = t.testing;
             gaugeValue.innerHTML = '... <small>Mbps</small>';
             pingDisplay.innerHTML = '... <small>ms</small>';
             uploadDisplay.innerHTML = '... <small>Mbps</small>';
 
             const steps = [
-                { delay: 800, label: 'Ping...', ping: (20 + Math.random() * 60).toFixed(0) },
-                { delay: 2000, label: 'Tải xuống...', download: (30 + Math.random() * 200).toFixed(1) },
-                { delay: 3200, label: 'Tải lên...', upload: (10 + Math.random() * 80).toFixed(1) }
+                { delay: 700, label: 'Ping...', ping: (15 + Math.random() * 65).toFixed(0) },
+                { delay: 1800, label: 'Tải xuống...', download: (25 + Math.random() * 220).toFixed(1) },
+                { delay: 3000, label: 'Tải lên...', upload: (8 + Math.random() * 82).toFixed(1) }
             ];
 
             let pingVal = 0,
@@ -633,7 +1109,6 @@
                 downVal = parseFloat(steps[1].download);
                 gaugeValue.innerHTML = `${downVal} <small>Mbps</small>`;
                 gaugeLabel.textContent = steps[1].label;
-
                 const offset = circumference - (downVal / 1000) * circumference;
                 progressCircle.style.strokeDashoffset = Math.max(0, Math.min(circumference, offset));
             }, steps[1].delay);
@@ -641,18 +1116,198 @@
             setTimeout(() => {
                 upVal = parseFloat(steps[2].upload);
                 uploadDisplay.innerHTML = `${upVal} <small>Mbps</small>`;
-                gaugeLabel.textContent = 'HOÀN TẤT';
+                gaugeLabel.textContent = t.complete;
                 isTesting = false;
-                container.classList.remove('testing');
+                document.querySelector('.container').classList.remove('testing');
+
+                // Save history
+                addHistory(downVal, upVal, pingVal);
+
+                // Play beep
+                try {
+                    const ctx = new(window.AudioContext || window.webkitAudioContext)();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.frequency.value = 880;
+                    gain.gain.value = 0.1;
+                    osc.start();
+                    setTimeout(() => { osc.stop();
+                        ctx.close(); }, 200);
+                } catch (e) {}
+
+                showToast(`✅ ${downVal} Mbps / ${upVal} Mbps / ${pingVal} ms`);
             }, steps[2].delay);
         }
 
-        testBtn.addEventListener('click', runTest);
+        // ============================================
+        // RESET
+        // ============================================
+        function resetDisplay() {
+            if (isTesting) return;
+            const t = translations[currentLang];
+            gaugeValue.innerHTML = '0.00 <small>Mbps</small>';
+            pingDisplay.innerHTML = '-- <small>ms</small>';
+            uploadDisplay.innerHTML = '-- <small>Mbps</small>';
+            progressCircle.style.strokeDashoffset = circumference;
+            gaugeLabel.textContent = t.download;
+        }
 
-        // === INIT ===
+        // ============================================
+        // SHARE & COPY
+        // ============================================
+        function getResultsText() {
+            const t = translations[currentLang];
+            const download = gaugeValue.textContent.trim();
+            const ping = pingDisplay.textContent.trim();
+            const upload = uploadDisplay.textContent.trim();
+            return `🚀 SHADOW TEST SPEED v4.0\n⬇ Download: ${download}\n⬆ Upload: ${upload}\n🏓 Ping: ${ping}\n© Shadow Team 2026`;
+        }
+
+        function copyResults() {
+            const text = getResultsText();
+            navigator.clipboard?.writeText(text).then(() => {
+                showToast(translations[currentLang].copied);
+            }).catch(() => {
+                // Fallback
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                ta.remove();
+                showToast(translations[currentLang].copied);
+            });
+        }
+
+        function shareResults() {
+            const text = getResultsText();
+            if (navigator.share) {
+                navigator.share({ title: 'SHADOW TEST SPEED', text: text }).catch(() => {});
+            } else {
+                copyResults();
+                showToast(translations[currentLang].shared);
+            }
+        }
+
+        // ============================================
+        // AUTO MODE
+        // ============================================
+        function toggleAuto() {
+            const t = translations[currentLang];
+            if (isAuto) {
+                clearInterval(autoInterval);
+                autoInterval = null;
+                isAuto = false;
+                autoBtn.classList.remove('active-auto');
+                autoBtn.querySelector('span').textContent = t.auto;
+                showToast('⏹️ Auto stopped');
+            } else {
+                isAuto = true;
+                autoBtn.classList.add('active-auto');
+                autoBtn.querySelector('span').textContent = '⏹️ ' + t.auto;
+                showToast('▶️ Auto started - test every 30s');
+                runTest();
+                autoInterval = setInterval(() => {
+                    if (!isTesting) runTest();
+                }, 30000);
+            }
+        }
+
+        // ============================================
+        // THEME
+        // ============================================
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            const icon = themeToggle.querySelector('i');
+            icon.className = document.body.classList.contains('dark') ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('shadow-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        // Load saved theme
+        if (localStorage.getItem('shadow-theme') === 'dark') {
+            document.body.classList.add('dark');
+            themeToggle.querySelector('i').className = 'fas fa-sun';
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        themeToggle.addEventListener('click', toggleTheme);
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', () => {
+            dropdownMenu.classList.remove('active');
+            langSubmenu.classList.remove('active');
+        });
+
+        langToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langSubmenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.lang-submenu a').forEach(item => {
+            item.addEventListener('click', () => {
+                const lang = item.dataset.lang;
+                setLanguage(lang);
+                langSubmenu.classList.remove('active');
+                dropdownMenu.classList.remove('active');
+                showToast(`🌐 ${item.textContent.trim()}`);
+                // Re-render history with new language
+                renderHistory();
+                // Reset gauge label
+                gaugeLabel.textContent = translations[lang].download;
+            });
+        });
+
+        aboutBtn.addEventListener('click', () => {
+            alert(
+                'SHADOW TEST SPEED v4.0\n\n👤 Created by: Minh Trí\n🏢 Team: Shadow Team\n📅 © 2026 Shadow Team - All Rights Reserved\n\n🌐 Multi-language support\n📊 History & Statistics\n🔄 Auto test mode\n📤 Share & Copy results\n\n⚡ Giao diện kiểm tra tốc độ mạng huyền ảo.'
+                );
+            dropdownMenu.classList.remove('active');
+        });
+
+        clearHistoryBtn.addEventListener('click', () => {
+            clearHistory();
+            dropdownMenu.classList.remove('active');
+        });
+
+        testBtn.addEventListener('click', runTest);
+        resetBtn.addEventListener('click', resetDisplay);
+        autoBtn.addEventListener('click', toggleAuto);
+        shareBtn.addEventListener('click', shareResults);
+        copyBtn.addEventListener('click', copyResults);
+
+        // Click on gauge also triggers test
+        document.querySelector('.speed-gauge').addEventListener('click', runTest);
+
+        // ============================================
+        // LOAD SAVED DATA
+        // ============================================
+        // Load language
+        const savedLang = localStorage.getItem('shadow-lang') || 'vi';
+        setLanguage(savedLang);
+
+        // Load history
+        const savedHistory = localStorage.getItem('shadow-history');
+        if (savedHistory) {
+            try {
+                history = JSON.parse(savedHistory);
+                if (!Array.isArray(history)) history = [];
+            } catch (e) { history = []; }
+        }
+        renderHistory();
+        updateStats();
+
+        // Init gauge
         progressCircle.style.strokeDashoffset = circumference;
 
-        console.log('SHADOW TEST SPEED v4.0 - © Shadow Team 2026');
+        console.log('👻 SHADOW TEST SPEED v4.0 - Multi-language, History, Auto, Share!');
     </script>
 
 </body>
