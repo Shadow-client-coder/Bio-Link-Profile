@@ -55,7 +55,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(20, 10, 35, 0.8);
+            background: rgba(20, 10, 35, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: 50px;
@@ -159,7 +159,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(20, 10, 35, 0.8);
+            background: rgba(20, 10, 35, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid var(--border-color);
             border-radius: 50px;
@@ -296,20 +296,20 @@
             color: var(--accent-light);
         }
 
-        /* BIO */
+        /* BIO - SỬA "BẠN - TÔI" */
         .bio {
             padding: 10px 30px 5px;
             text-align: center;
             font-size: 15px;
             color: var(--text-secondary);
-            line-height: 1.7;
+            line-height: 1.8;
             max-width: 500px;
             margin: 0 auto;
         }
 
         .bio .highlight {
             color: var(--accent-light);
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* BUTTONS */
@@ -612,20 +612,20 @@
             </a>
         </div>
 
-        <!-- BIO -->
+        <!-- BIO - ĐÃ SỬA THÀNH "BẠN - TÔI" -->
         <div class="bio">
             <p>
-                Chào mày! Tao là <span class="highlight">Minh Trí</span>, chủ nhân của <span class="highlight">Shadow Team</span>.
-                Bọn tao chuyên <span class="highlight">hack game</span>, làm <span class="highlight">mod skin Free Fire</span>
-                và săn <span class="highlight">script Roblox</span> chất lượng. Mày thấy gì hay thì xài, có gì thắc mắc cứ hỏi.
-                Đam mê là cháy hết mình, chơi là phải đẹp! 🔥
+                Xin chào! Tôi là <span class="highlight">Minh Trí</span>, chủ nhân của <span class="highlight">Shadow Team</span>.
+                Nhóm của tôi chuyên về <span class="highlight">hack game</span>, phát triển <span class="highlight">mod skin Free Fire</span>
+                và cung cấp <span class="highlight">script Roblox</span> chất lượng. Nếu bạn thấy sản phẩm của tôi hữu ích, hãy dùng thử nhé!
+                Mọi thắc mắc, đóng góp xin liên hệ qua email hoặc Discord. Cảm ơn bạn đã ghé thăm! 🔥
             </p>
         </div>
 
         <!-- === LINKS === -->
         <div class="links">
             <!-- Mục 1: Kết nối -->
-            <div class="section-title">✦ Kết nối với tụi tao ✦</div>
+            <div class="section-title">✦ Kết nối với tôi ✦</div>
 
             <a href="https://www.youtube.com/@Shadow_System_yt" target="_blank" class="btn-link btn-youtube">
                 <i class="fab fa-youtube"></i>
@@ -652,7 +652,7 @@
             </a>
 
             <!-- Mục 2: Dự án -->
-            <div class="section-title">✦ Dự án của tụi tao ✦</div>
+            <div class="section-title">✦ Dự án của tôi ✦</div>
 
             <a href="https://shadow-client-coder.github.io/ShadowSkinMod/" target="_blank" class="btn-link btn-mod">
                 <i class="fas fa-paint-brush"></i>
@@ -675,34 +675,30 @@
 
     <script>
         // ============================================
-        // MUSIC PLAYER (YouTube embed + controls)
+        // MUSIC PLAYER - FIX LỖI KHÔNG PHÁT
         // ============================================
-        const musicPlayer = document.getElementById('musicPlayer');
         const vinylDisc = document.getElementById('vinylDisc');
         const playBtn = document.getElementById('playBtn');
         const muteBtn = document.getElementById('muteBtn');
         const volumeSlider = document.getElementById('volumeSlider');
         const timeDisplay = document.getElementById('timeDisplay');
 
-        // Tạo iframe YouTube ẩn để phát nhạc
-        const playerContainer = document.createElement('div');
-        playerContainer.style.display = 'none';
-        document.body.appendChild(playerContainer);
+        let player = null;
+        let isPlaying = true;
+        let isMuted = false;
+        let playerReady = false;
 
+        // Tạo iframe YouTube
         const iframe = document.createElement('iframe');
         iframe.id = 'youtubePlayer';
         iframe.width = '0';
         iframe.height = '0';
-        iframe.src = 'https://www.youtube.com/embed/96Bb5DR4pDc?enablejsapi=1&autoplay=1&loop=1&playlist=96Bb5DR4pDc';
+        iframe.src = 'https://www.youtube.com/embed/96Bb5DR4pDc?enablejsapi=1&autoplay=1&loop=1&playlist=96Bb5DR4pDc&controls=0&modestbranding=1&rel=0';
         iframe.allow = 'autoplay; encrypted-media';
         iframe.style.display = 'none';
-        playerContainer.appendChild(iframe);
+        document.body.appendChild(iframe);
 
-        let player = null;
-        let isPlaying = true;
-        let isMuted = false;
-
-        // Khởi tạo YouTube API
+        // Load YouTube API
         let tag = document.createElement('script');
         tag.src = 'https://www.youtube.com/iframe_api';
         let firstScriptTag = document.getElementsByTagName('script')[0];
@@ -712,6 +708,7 @@
             player = new YT.Player('youtubePlayer', {
                 events: {
                     onReady: function(event) {
+                        playerReady = true;
                         event.target.setVolume(50);
                         event.target.playVideo();
                         updateTimeLoop();
@@ -725,6 +722,12 @@
                             isPlaying = false;
                             playBtn.innerHTML = '<i class="fas fa-play"></i>';
                             vinylDisc.classList.remove('spinning');
+                        } else if (event.data === YT.PlayerState.ENDED) {
+                            // Tự động phát lại
+                            if (player) {
+                                player.seekTo(0);
+                                player.playVideo();
+                            }
                         }
                     }
                 }
@@ -733,15 +736,17 @@
 
         // Cập nhật thời gian
         function updateTimeLoop() {
-            if (player && player.getCurrentTime) {
+            if (player && playerReady) {
                 try {
                     const current = player.getCurrentTime() || 0;
                     const duration = player.getDuration() || 0;
-                    const curMin = Math.floor(current / 60);
-                    const curSec = Math.floor(current % 60).toString().padStart(2, '0');
-                    const durMin = Math.floor(duration / 60);
-                    const durSec = Math.floor(duration % 60).toString().padStart(2, '0');
-                    timeDisplay.textContent = `${curMin}:${curSec} / ${durMin}:${durSec}`;
+                    if (duration > 0) {
+                        const curMin = Math.floor(current / 60);
+                        const curSec = Math.floor(current % 60).toString().padStart(2, '0');
+                        const durMin = Math.floor(duration / 60);
+                        const durSec = Math.floor(duration % 60).toString().padStart(2, '0');
+                        timeDisplay.textContent = `${curMin}:${curSec} / ${durMin}:${durSec}`;
+                    }
                 } catch (e) {}
             }
             requestAnimationFrame(updateTimeLoop);
@@ -749,7 +754,7 @@
 
         // Play/Pause
         playBtn.addEventListener('click', function() {
-            if (!player) return;
+            if (!player || !playerReady) return;
             if (isPlaying) {
                 player.pauseVideo();
             } else {
@@ -759,28 +764,32 @@
 
         // Mute/Unmute
         muteBtn.addEventListener('click', function() {
-            if (!player) return;
+            if (!player || !playerReady) return;
             if (isMuted) {
                 player.unMute();
                 isMuted = false;
                 muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                volumeSlider.value = 0.5;
             } else {
                 player.mute();
                 isMuted = true;
                 muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                volumeSlider.value = 0;
             }
         });
 
         // Volume
         volumeSlider.addEventListener('input', function() {
-            if (!player) return;
+            if (!player || !playerReady) return;
             const val = parseFloat(this.value);
             player.setVolume(val * 100);
             if (val === 0) {
                 muteBtn.innerHTML = '<i class="fas fa-volume-off"></i>';
-            } else if (isMuted) {
-                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                isMuted = true;
             } else {
+                if (isMuted) {
+                    isMuted = false;
+                }
                 muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
             }
         });
@@ -791,7 +800,7 @@
         });
 
         // ============================================
-        // VIEW COUNTER (lưu bằng localStorage)
+        // VIEW COUNTER
         // ============================================
         const viewCountEl = document.getElementById('viewCount');
 
@@ -806,7 +815,6 @@
             return count;
         }
 
-        // Chỉ tăng 1 lần mỗi phiên (session)
         if (!sessionStorage.getItem('shadowViewed')) {
             const count = getViewCount();
             viewCountEl.textContent = count;
