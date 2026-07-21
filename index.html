@@ -396,81 +396,6 @@
             font-weight: 700;
         }
 
-        /* === HEADER RIGHT - FIX MENU === */
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-            z-index: 1001;
-        }
-
-        .theme-toggle {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .menu-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 0;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 12px 0;
-            min-width: 200px;
-            box-shadow: 0 15px 40px var(--shadow-color);
-            z-index: 9999;
-        }
-
-        .dropdown-menu.active {
-            display: block;
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 10px 20px;
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .dropdown-menu a:hover {
-            background: var(--bg-primary);
-        }
-
-        .dropdown-menu .divider {
-            height: 1px;
-            background: var(--border-color);
-            margin: 6px 0;
-        }
-
         /* === BACK TO TOP BUTTON === */
         .back-to-top {
             position: fixed;
@@ -1017,7 +942,7 @@
         </div>
     </div>
 
-<!-- === VIEW COUNTER === -->
+    <!-- === VIEW COUNTER === -->
     <div class="view-counter">
         <i class="fas fa-eye"></i>
         <span class="count" id="viewCount">0</span>
@@ -1067,7 +992,7 @@
                 Xin chào! Tôi là <span class="highlight">Minh Trí</span>, chủ nhân của <span class="highlight">Shadow Team</span>.
                 Nhóm của tôi chuyên về <span class="highlight">hack game</span>, phát triển <span class="highlight">mod skin Free Fire</span>
                 và cung cấp <span class="highlight">script Roblox</span> chất lượng. Nếu bạn thấy sản phẩm của tôi hữu ích, hãy dùng thử nhé!
-                Mọi thắc mắc, đóng góp xin liên hệ qua email hoặc Discord. Cảm ơn bạn đã ghé thăm! 
+                Mọi thắc mắc, đóng góp xin liên hệ qua email hoặc Discord. Cảm ơn bạn đã ghé thăm!
             </p>
         </div>
 
@@ -1464,29 +1389,6 @@
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE
             }, 'google_translate_element');
         };
-
-        // ============================================
-        // THEME TOGGLE (SÁNG/TỐI)
-        // ============================================
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', function() {
-                document.body.classList.toggle('dark');
-                const icon = themeToggle.querySelector('i');
-                if (document.body.classList.contains('dark')) {
-                    icon.className = 'fas fa-sun';
-                } else {
-                    icon.className = 'fas fa-moon';
-                }
-                localStorage.setItem('shadow-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-            });
-
-            // Load saved theme
-            if (localStorage.getItem('shadow-theme') === 'dark') {
-                document.body.classList.add('dark');
-                themeToggle.querySelector('i').className = 'fas fa-sun';
-            }
-        }
 
         console.log('👻 SHADOW TEAM Bio Link v4.0 - © 2026');
     </script>
