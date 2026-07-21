@@ -433,6 +433,72 @@
             color: var(--bg-primary);
         }
 
+        /* === MENU 3 GẠCH - FIX === */
+        .menu-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 100px;
+            z-index: 1001;
+        }
+
+        .menu-btn {
+            background: rgba(20, 10, 35, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .menu-btn:hover {
+            border-color: var(--accent-light);
+            box-shadow: 0 0 30px rgba(120, 40, 200, 0.2);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 0;
+            min-width: 200px;
+            box-shadow: 0 15px 40px var(--shadow-color);
+            z-index: 9999;
+        }
+
+        .dropdown-menu.active {
+            display: block !important;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--bg-primary);
+        }
+
+        .dropdown-menu .divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 6px 0;
+        }
+
         /* === CONTAINER === */
         .container {
             max-width: 600px;
@@ -772,6 +838,10 @@
                 padding: 6px 14px;
                 font-size: 12px;
             }
+            .menu-wrapper {
+                right: 80px;
+                top: 12px;
+            }
             .container {
                 border-radius: 28px;
             }
@@ -873,6 +943,10 @@
                 padding: 4px 12px;
                 font-size: 11px;
             }
+            .menu-wrapper {
+                right: 70px;
+                top: 8px;
+            }
             .banner {
                 height: 120px;
             }
@@ -949,11 +1023,11 @@
     </div>
 
     <!-- === MENU 3 GẠCH === -->
-    <div style="position:fixed; top:20px; right:100px; z-index:1001;">
-        <button class="menu-btn" id="menuBtn" style="background:rgba(20,10,35,0.85); backdrop-filter:blur(12px); border:1px solid var(--border-color); color:var(--text-primary); width:40px; height:40px; border-radius:50%; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center;">
+    <div class="menu-wrapper">
+        <button class="menu-btn" id="menuBtn">
             <i class="fas fa-bars"></i>
         </button>
-        <div class="dropdown-menu" id="dropdownMenu" style="position:absolute; top:50px; right:0; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:16px; padding:12px 0; min-width:200px; box-shadow:0 15px 40px var(--shadow-color); z-index:9999; display:none;">
+        <div class="dropdown-menu" id="dropdownMenu">
             <a id="langToggle">🌐 Ngôn ngữ / Language</a>
             <div class="divider"></div>
             <a id="aboutBtn">ℹ️ About</a>
