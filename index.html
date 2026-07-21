@@ -1017,10 +1017,22 @@
         </div>
     </div>
 
-    <!-- === VIEW COUNTER === -->
+<!-- === VIEW COUNTER === -->
     <div class="view-counter">
         <i class="fas fa-eye"></i>
         <span class="count" id="viewCount">0</span>
+    </div>
+
+    <!-- === MENU 3 GẠCH === -->
+    <div style="position:fixed; top:20px; right:100px; z-index:1001;">
+        <button class="menu-btn" id="menuBtn" style="background:rgba(20,10,35,0.85); backdrop-filter:blur(12px); border:1px solid var(--border-color); color:var(--text-primary); width:40px; height:40px; border-radius:50%; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center;">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="dropdown-menu" id="dropdownMenu" style="position:absolute; top:50px; right:0; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:16px; padding:12px 0; min-width:200px; box-shadow:0 15px 40px var(--shadow-color); z-index:9999; display:none;">
+            <a id="langToggle">🌐 Ngôn ngữ / Language</a>
+            <div class="divider"></div>
+            <a id="aboutBtn">ℹ️ About</a>
+        </div>
     </div>
 
     <!-- === LANGUAGE SELECTOR === -->
