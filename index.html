@@ -396,6 +396,81 @@
             font-weight: 700;
         }
 
+        /* === HEADER RIGHT - FIX MENU === */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .theme-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 0;
+            min-width: 200px;
+            box-shadow: 0 15px 40px var(--shadow-color);
+            z-index: 9999;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu a:hover {
+            background: var(--bg-primary);
+        }
+
+        .dropdown-menu .divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 6px 0;
+        }
+
         /* === BACK TO TOP BUTTON === */
         .back-to-top {
             position: fixed;
@@ -715,6 +790,27 @@
             font-weight: 600;
         }
 
+        /* === LANGUAGE SELECTOR FIX === */
+        #google_translate_element {
+            position: fixed;
+            top: 75px;
+            right: 20px;
+            z-index: 9999;
+            background: rgba(20, 10, 35, 0.95);
+            padding: 10px 16px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            display: none;
+        }
+        #google_translate_element .goog-te-combo {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
         /* RESPONSIVE */
         @media (max-width: 600px) {
             .splash-box {
@@ -800,6 +896,15 @@
                 bottom: 20px;
                 right: 20px;
             }
+            #google_translate_element {
+                top: 70px;
+                right: 12px;
+                padding: 6px 12px;
+            }
+            #google_translate_element .goog-te-combo {
+                font-size: 12px;
+                padding: 2px 6px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -869,6 +974,15 @@
                 bottom: 15px;
                 right: 15px;
             }
+            #google_translate_element {
+                top: 62px;
+                right: 8px;
+                padding: 4px 10px;
+            }
+            #google_translate_element .goog-te-combo {
+                font-size: 11px;
+                padding: 2px 4px;
+            }
         }
     </style>
 </head>
@@ -910,14 +1024,14 @@
     </div>
 
     <!-- === LANGUAGE SELECTOR === -->
-    <div id="google_translate_element" style="position: fixed; top: 75px; right: 20px; z-index: 1000; background: rgba(20,10,35,0.85); padding: 8px 12px; border-radius: 30px; border: 1px solid var(--border-color); backdrop-filter: blur(12px); display: none;"></div>
+    <div id="google_translate_element"></div>
 
     <!-- === MAIN CONTAINER === -->
     <div class="container" id="mainContent">
         <div class="banner" id="banner">
-            <div class="banner-slide active" style="background-image: url('https://i.ibb.co/9MJV3HV/IMG-0741.jpg');"></div>
-            <div class="banner-slide" style="background-image: url('https://i.ibb.co/9MJV3HV/IMG-0741.jpg');"></div>
-            <div class="banner-slide" style="background-image: url('https://i.ibb.co/9MJV3HV/IMG-0741.jpg');"></div>
+            <div class="banner-slide active" style="background-image: url('https://cellphones.com.vn/sforum/wp-content/uploads/2021/12/12-22-scaled.jpg');"></div>
+            <div class="banner-slide" style="background-image: url('https://cellphones.com.vn/sforum/wp-content/uploads/2021/12/12-22-scaled.jpg');"></div>
+            <div class="banner-slide" style="background-image: url('https://cellphones.com.vn/sforum/wp-content/uploads/2021/12/12-22-scaled.jpg');"></div>
             <div class="banner-overlay"></div>
         </div>
 
@@ -1290,13 +1404,45 @@
         });
 
         // ============================================
+        // MENU TOGGLE - FIX BỊ CHE
+        // ============================================
+        const menuBtn = document.getElementById('menuBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        if (menuBtn && dropdownMenu) {
+            menuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function() {
+                dropdownMenu.classList.remove('active');
+            });
+
+            document.getElementById('langToggle').addEventListener('click', function(e) {
+                e.stopPropagation();
+                addTranslate();
+                dropdownMenu.classList.remove('active');
+            });
+
+            document.getElementById('aboutBtn').addEventListener('click', function() {
+                alert('👻 SHADOW TEAM Bio Link v4.0\n© 2026 Shadow Team\nCreated by Minh Trí');
+                dropdownMenu.classList.remove('active');
+            });
+        }
+
+        // ============================================
         // GOOGLE TRANSLATE - ĐA NGÔN NGỮ
         // ============================================
         function addTranslate() {
-            document.getElementById('google_translate_element').style.display = 'block';
-            const script = document.createElement('script');
-            script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-            document.head.appendChild(script);
+            const el = document.getElementById('google_translate_element');
+            el.style.display = 'block';
+            if (!document.querySelector('#google-translate-script')) {
+                const script = document.createElement('script');
+                script.id = 'google-translate-script';
+                script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+                document.head.appendChild(script);
+            }
         }
 
         window.googleTranslateElementInit = function() {
@@ -1307,40 +1453,27 @@
             }, 'google_translate_element');
         };
 
-        // Thêm nút chọn ngôn ngữ vào header (bên cạnh nút menu)
-        const headerRight = document.querySelector('.header-right');
-        if (headerRight) {
-            const menuWrapper = document.createElement('div');
-            menuWrapper.style.position = 'relative';
-            menuWrapper.innerHTML = `
-                <button class="menu-btn" id="menuBtn">
-                    <i class="fas fa-globe"></i>
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a id="langToggle">🌐 Ngôn ngữ / Language</a>
-                    <div class="divider"></div>
-                    <a id="aboutBtn">ℹ️ About</a>
-                </div>
-            `;
-            headerRight.appendChild(menuWrapper);
-
-            document.getElementById('menuBtn').addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.getElementById('dropdownMenu').classList.toggle('active');
+        // ============================================
+        // THEME TOGGLE (SÁNG/TỐI)
+        // ============================================
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark');
+                const icon = themeToggle.querySelector('i');
+                if (document.body.classList.contains('dark')) {
+                    icon.className = 'fas fa-sun';
+                } else {
+                    icon.className = 'fas fa-moon';
+                }
+                localStorage.setItem('shadow-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
             });
 
-            document.getElementById('langToggle').addEventListener('click', function(e) {
-                e.stopPropagation();
-                addTranslate();
-                document.getElementById('dropdownMenu').classList.remove('active');
-                setTimeout(() => {
-                    document.getElementById('dropdownMenu').classList.remove('active');
-                }, 300);
-            });
-
-            document.addEventListener('click', function() {
-                document.getElementById('dropdownMenu').classList.remove('active');
-            });
+            // Load saved theme
+            if (localStorage.getItem('shadow-theme') === 'dark') {
+                document.body.classList.add('dark');
+                themeToggle.querySelector('i').className = 'fas fa-sun';
+            }
         }
 
         console.log('👻 SHADOW TEAM Bio Link v4.0 - © 2026');
